@@ -5,13 +5,6 @@ Nazario Martín research group, deployed on GitHub Pages.
 
 > **Live site:** [www.nazariomartingroup.com](https://www.nazariomartingroup.com) — the fully maintained group website.
 
-## ⚠️ Repository visibility
-
-**Keep this repository PRIVATE until explicit sign-off from the group /
-Nazario Martín.** This is institutional content, not a personal project —
-authorization covers the code, not necessarily the real content (member
-names, photos, publication data).
-
 ## Stack
 
 - Single self-contained `index.html` — all CSS and JS are inlined, no build
@@ -31,11 +24,15 @@ content/
 
 ## Content status
 
-`content/publications.example.json` shows the expected data structure.
-The real content (`publications.json`, member photos, etc.) is gitignored and
-gets added once the repo's use is confirmed with the group.
+The `index.html` in this repo is a representative demo — it shows the full
+site structure and one example of each content type (member card, news item,
+publication entry) but does not include the complete real data.
+`content/publications.example.json` shows the expected data structure for
+the publication list.
 
 ## License
 
-Code: MIT (see LICENSE). Content (once real) is not covered by this license
-and belongs to the research group.
+The code (HTML structure, CSS, JavaScript) is released under the MIT licence —
+meaning anyone can freely use, copy, or modify it. The content (group name,
+research descriptions, any real member or publication data) belongs to the
+Nazario Martín research group and is not covered by this licence.
