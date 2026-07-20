@@ -1,0 +1,2135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nazario Martín Group — Organic Molecular Materials</title>
+<link rel="icon" type="image/svg+xml" href="img/nmg_symbol_dark.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0f1f3d;
+    --navy-light: #1a3260;
+    --gold: #c8a84b;
+    --gold-light: #e8c96a;
+    --blue: #2d6fd0;
+    --blue-light: #4a8fe8;
+    --bg: #f7f6f2;
+    --bg-card: #ffffff;
+    --text: #1a1a2e;
+    --text-muted: #6b7280;
+    --text-light: #9ca3af;
+    --border: #e5e2d9;
+    --radius: 8px;
+    --shadow: 0 4px 20px rgba(15,31,61,0.08);
+    --shadow-lg: 0 12px 40px rgba(15,31,61,0.14);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    background: var(--navy);
+    border-bottom: 2px solid var(--gold);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2.5rem;
+    height: 100px;
+    transition: box-shadow 0.3s;
+  }
+  nav.scrolled { box-shadow: 0 4px 24px rgba(0,0,0,0.3); }
+
+  .nav-logo {
+    display: flex; align-items: center; gap: 0.75rem; cursor: pointer;
+    text-decoration: none;
+  }
+  .nav-logo-mark {
+    width: 36px; height: 36px;
+    background: var(--gold);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 700; font-size: 1.1rem;
+    color: var(--navy);
+    flex-shrink: 0;
+  }
+  .nav-logo-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; font-weight: 600;
+    color: white; line-height: 1.2;
+  }
+  .nav-logo-sub { font-size: 0.65rem; color: var(--gold); letter-spacing: 0.08em; text-transform: uppercase; font-family: 'Outfit', sans-serif; font-weight: 400; }
+
+  .nav-links { display: flex; gap: 0; align-items: center; }
+  .nav-links a {
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    font-size: 1.05rem;
+    font-weight: 400;
+    letter-spacing: 0.03em;
+    padding: 0 1.25rem;
+    height: 100px;
+    display: flex; align-items: center;
+    border-bottom: 3px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+    cursor: pointer;
+  }
+  .nav-links a:hover, .nav-links a.active {
+    color: white;
+    border-bottom-color: var(--gold);
+  }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; }
+  .hamburger span { display: block; width: 24px; height: 2px; background: white; transition: all 0.3s; }
+
+  /* ── PAGE SYSTEM ── */
+  .page { display: none; padding-top: 100px; min-height: 100vh; }
+  .page.active { display: block; }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--navy);
+    min-height: calc(100vh - 100px);
+    display: flex; flex-direction: column; justify-content: center;
+    position: relative; overflow: hidden;
+    padding: 4rem 2.5rem;
+  }
+  #fullerene-canvas {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    max-width: 1200px; margin: 0 auto; width: 100%;
+  }
+  .hero-label {
+    font-size: 0.75rem; font-weight: 500;
+    color: var(--gold);
+    letter-spacing: 0.2em; text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .hero-label::before {
+    content: ''; display: block; width: 32px; height: 1px; background: var(--gold);
+  }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    font-weight: 300;
+    color: white;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    max-width: 800px;
+  }
+  .hero h1 em { font-style: italic; color: var(--gold-light); }
+  .hero-desc {
+    color: rgba(255,255,255,0.65);
+    font-size: 1.1rem; font-weight: 300;
+    max-width: 600px;
+    line-height: 1.8;
+    margin-bottom: 3rem;
+  }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.85rem 1.75rem;
+    font-size: 0.9rem; font-weight: 500;
+    border-radius: var(--radius);
+    cursor: pointer; text-decoration: none;
+    transition: all 0.2s;
+    border: none;
+  }
+  .btn-primary {
+    background: var(--gold);
+    color: var(--navy);
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .btn-outline {
+    background: transparent;
+    border: 1.5px solid rgba(255,255,255,0.3);
+    color: white;
+  }
+  .btn-outline:hover { border-color: white; background: rgba(255,255,255,0.08); }
+
+  /* ── STATS BAR ── */
+  .stats-bar {
+    background: white;
+    border-top: 4px solid var(--gold);
+    padding: 2.5rem;
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+  .stat-item {
+    text-align: center;
+    padding: 0 2rem;
+    border-right: 1px solid var(--border);
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem; font-weight: 600;
+    color: var(--navy);
+    display: block; line-height: 1;
+    margin-bottom: 0.35rem;
+  }
+  .stat-num span { color: var(--gold); }
+  .stat-label {
+    font-size: 0.8rem; font-weight: 500;
+    color: var(--text-muted);
+    letter-spacing: 0.05em; text-transform: uppercase;
+  }
+
+  /* ── SECTIONS ── */
+  section { padding: 5rem 2.5rem; }
+  .container { max-width: 1200px; margin: 0 auto; }
+
+  .section-header { margin-bottom: 3.5rem; }
+  .section-label {
+    font-size: 0.72rem; font-weight: 600;
+    color: var(--gold);
+    letter-spacing: 0.18em; text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .section-label::after { content: ''; flex: 1; max-width: 40px; height: 1px; background: var(--gold); }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 400; color: var(--navy);
+    line-height: 1.2;
+  }
+  .section-title em { font-style: italic; }
+  .section-sub {
+    margin-top: 0.75rem;
+    font-size: 1rem; color: var(--text-muted);
+    max-width: 600px;
+  }
+
+  /* ── RESEARCH CARDS ── */
+  .research-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 1.5rem;
+  }
+  .research-card {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    padding: 2rem;
+    border: 1px solid var(--border);
+    transition: all 0.3s;
+    position: relative; overflow: hidden;
+    cursor: pointer;
+  }
+  .research-card::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: var(--gold);
+    transform: scaleY(0);
+    transition: transform 0.3s;
+    transform-origin: bottom;
+  }
+  .research-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); border-color: transparent; }
+  .research-card:hover::before { transform: scaleY(1); }
+  .research-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.5rem; font-weight: 700;
+    color: var(--border);
+    line-height: 1; margin-bottom: 0.5rem;
+    transition: color 0.3s;
+  }
+  .research-card:hover .research-num { color: rgba(200,168,75,0.15); }
+  .research-card h3 {
+    font-size: 1rem; font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+  }
+  .research-card p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; }
+  .research-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1.25rem; }
+  .tag {
+    font-size: 0.72rem; font-weight: 500;
+    padding: 0.25rem 0.65rem;
+    border-radius: 100px;
+    background: var(--bg);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+  }
+
+  /* ── NEWS SECTION ── */
+  .news-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 3rem;
+  }
+  .news-list { display: flex; flex-direction: column; gap: 1.5rem; }
+  .news-item {
+    display: flex; gap: 1.25rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+    align-items: flex-start;
+  }
+  .news-item:last-child { border-bottom: none; }
+  .news-date {
+    flex-shrink: 0; width: 64px;
+    text-align: center;
+    background: var(--navy); color: white;
+    border-radius: 6px;
+    padding: 0.6rem 0.4rem;
+    font-family: 'Cormorant Garamond', serif;
+  }
+  .news-date .day { font-size: 1.4rem; font-weight: 700; display: block; line-height: 1; }
+  .news-date .month { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gold); margin-top: 2px; display: block; }
+  .news-date .year { font-size: 0.65rem; color: rgba(255,255,255,0.5); }
+  .news-content h4 {
+    font-size: 1.05rem; font-weight: 600;
+    color: var(--navy); line-height: 1.4;
+    margin-bottom: 0.35rem;
+  }
+  .news-content p { font-size: 0.85rem; color: var(--text-muted); }
+  .news-content a { font-size: 0.8rem; color: var(--blue); text-decoration: none; }
+  .news-content a:hover { text-decoration: underline; }
+  .news-source {
+    font-size: 0.7rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--gold);
+    margin-bottom: 0.3rem;
+  }
+
+  /* ── NEWS PHOTO GALLERY ── */
+  .news-gallery { display:flex; gap:0.5rem; margin-top:0.75rem; flex-wrap:wrap; }
+  .news-gallery img {
+    width:80px; height:60px; object-fit:cover; border-radius:4px;
+    cursor:pointer; border:1px solid var(--border); transition:all 0.2s;
+  }
+  .news-gallery img:hover { transform:scale(1.05); box-shadow:var(--shadow); }
+  /* ── IMAGE LIGHTBOX ── */
+  .img-lightbox {
+    display:none; position:fixed; inset:0; z-index:11000;
+    background:rgba(0,0,0,0.85); backdrop-filter:blur(8px);
+    justify-content:center; align-items:center; cursor:pointer;
+  }
+  .img-lightbox.active { display:flex; }
+  .img-lightbox img {
+    max-width:90vw; max-height:90vh; object-fit:contain;
+    border-radius:8px; box-shadow:0 8px 40px rgba(0,0,0,0.5);
+    animation:modalIn 0.3s ease;
+  }
+  .img-lightbox .lb-close {
+    position:absolute; top:1.5rem; right:1.5rem;
+    width:36px; height:36px; border-radius:50%;
+    background:rgba(255,255,255,0.15); border:none;
+    color:white; font-size:1.2rem; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .img-lightbox .lb-close:hover { background:rgba(255,255,255,0.3); }
+
+  /* ── SIDEBAR ── */
+  .sidebar-widget { margin-bottom: 2rem; }
+  .widget-title {
+    font-size: 0.72rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.15em;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--border);
+  }
+  .affiliations { display: flex; flex-direction: column; gap: 0.75rem; }
+  .affil-item {
+    display: flex; align-items: center; gap: 0.75rem;
+    padding: 0.75rem;
+    background: white;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+  .affil-badge {
+    width: 32px; height: 32px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.65rem; font-weight: 700;
+    flex-shrink: 0;
+  }
+
+
+  /* ── MODAL OVERLAY ── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 10000;
+    background: rgba(15,31,61,0.65); backdrop-filter: blur(6px);
+    justify-content: center; align-items: flex-start;
+    padding: 3rem 1.5rem; overflow-y: auto;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal-content {
+    background: white; border-radius: var(--radius);
+    max-width: 720px; width: 100%; position: relative;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.3);
+    animation: modalIn 0.3s ease;
+  }
+  @keyframes modalIn { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  .modal-close {
+    position: absolute; top: 1rem; right: 1rem; width: 36px; height: 36px;
+    border: none; background: var(--bg); border-radius: 50%; cursor: pointer;
+    font-size: 1.2rem; color: var(--text-muted); display: flex; align-items: center;
+    justify-content: center; z-index: 2; transition: background 0.2s;
+  }
+  .modal-close:hover { background: var(--border); }
+  .modal-photo {
+    width: 100%; max-height: 500px;
+    border-radius: var(--radius) var(--radius) 0 0;
+    background: var(--bg); display: flex; align-items: center; justify-content: center;
+  }
+  .modal-photo img { width: auto; max-width: 100%; max-height: 500px; object-fit: contain; display: block; }
+  .modal-photo .modal-initials {
+    font-family: 'Cormorant Garamond', serif; font-size: 4rem;
+    color: var(--border); font-weight: 700; padding: 4rem 0;
+  }
+  .modal-body { padding: 2rem 2.5rem 2.5rem; }
+  .modal-body .modal-role {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
+    text-transform: uppercase; letter-spacing: 0.12em; color: var(--gold);
+    margin-bottom: 0.4rem;
+  }
+  .modal-body .modal-name {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.8rem;
+    font-weight: 700; color: var(--navy); margin-bottom: 1rem; line-height: 1.3;
+  }
+  .modal-body .modal-bio {
+    font-size: 0.92rem; color: var(--text-muted); line-height: 1.85;
+  }
+  .modal-body .modal-bio p { margin-bottom: 1rem; }
+  .modal-body .modal-bio img {
+    width: 100%; border-radius: 6px; margin: 1rem 0;
+  }
+  .modal-body .modal-bio h4 {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.2rem;
+    color: var(--navy); margin: 1.5rem 0 0.75rem; font-weight: 700;
+  }
+  .member-card[data-has-bio] { cursor: pointer; }
+  .member-card[data-has-bio]::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+    background: var(--gold); transform: scaleX(0); transition: transform 0.3s;
+  }
+  .member-card[data-has-bio]:hover::after { transform: scaleX(1); }
+  .member-card { position: relative; overflow: hidden; }
+  @media (max-width: 600px) {
+    .modal-content { margin: 1rem; }
+    .modal-body { padding: 1.5rem; }
+  }
+
+  /* ── MEMBERS ── */
+  .members-filter {
+    display: flex; gap: 0.5rem; flex-wrap: wrap;
+    margin-bottom: 2.5rem;
+  }
+  .filter-btn {
+    padding: 0.5rem 1.25rem;
+    font-size: 0.82rem; font-weight: 500;
+    border-radius: 100px;
+    border: 1.5px solid var(--border);
+    background: white; color: var(--text-muted);
+    cursor: pointer; transition: all 0.2s;
+  }
+  .filter-btn.active, .filter-btn:hover {
+    background: var(--navy);
+    border-color: var(--navy);
+    color: white;
+  }
+  .members-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.25rem;
+  }
+  .member-card {
+    background: white;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    transition: all 0.25s;
+    display: flex; flex-direction: column;
+  }
+  .member-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); }
+  .member-photo {
+    width: 100%; height: 240px;
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .member-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; }
+  .member-initials {
+    width: 72px; height: 72px; border-radius: 50%;
+    background: rgba(200,168,75,0.2);
+    border: 2px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem; font-weight: 600;
+    color: var(--gold);
+  }
+  .member-info { padding: 1.25rem; flex: 1; display: flex; flex-direction: column; }
+  .member-role {
+    font-size: 0.7rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.12em;
+    color: var(--gold);
+    margin-bottom: 0.35rem;
+  }
+  .member-name {
+    font-size: 1.05rem; font-weight: 600;
+    color: var(--navy); line-height: 1.3;
+    margin-bottom: 0.5rem;
+  }
+  .member-bio {
+    font-size: 0.8rem; color: var(--text-muted);
+    line-height: 1.6; flex: 1;
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .member-links {
+    display: flex; gap: 0.5rem;
+    margin-top: 1rem; padding-top: 0.75rem;
+    border-top: 1px solid var(--border);
+  }
+  .member-link {
+    font-size: 0.72rem; font-weight: 500;
+    color: var(--blue); text-decoration: none;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    background: rgba(45,111,208,0.08);
+    transition: background 0.2s;
+  }
+  .member-link:hover { background: rgba(45,111,208,0.15); }
+
+  /* ── PROFESSOR CARD (featured) ── */
+  .pi-card {
+    background: var(--navy);
+    border-radius: var(--radius);
+    padding: 2.5rem;
+    display: grid; grid-template-columns: 180px 1fr;
+    gap: 2.5rem;
+    margin-bottom: 3rem;
+    align-items: center;
+    position: relative; overflow: hidden;
+  }
+  .pi-card::after {
+    content: '';
+    position: absolute; right: -30px; bottom: -30px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    border: 40px solid rgba(200,168,75,0.1);
+  }
+  .pi-photo {
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    border: 3px solid var(--gold);
+    object-fit: cover;
+    background: var(--navy-light);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem; color: var(--gold);
+    overflow: hidden;
+  }
+  .pi-photo img { width: 100%; height: 100%; object-fit: cover; }
+
+  .pi-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
+  .pi-name { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 400; color: white; line-height: 1.1; margin-bottom: 0.25rem; }
+  .pi-title { font-size: 0.9rem; color: rgba(255,255,255,0.6); margin-bottom: 1rem; }
+  .pi-bio { font-size: 0.88rem; color: rgba(255,255,255,0.7); line-height: 1.7; margin-bottom: 1.25rem; }
+  .pi-metrics { display: flex; gap: 1.5rem; }
+  .pi-metric { text-align: center; }
+  .pi-metric strong { display: block; font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; color: var(--gold); }
+  .pi-metric span { font-size: 0.72rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.08em; }
+
+  /* ── CATEGORY HEADERS ── */
+  .members-category { margin-bottom: 2rem; }
+  .cat-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-weight: 400;
+    color: var(--navy);
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--border);
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .cat-count {
+    font-size: 0.78rem; font-weight: 600;
+    background: var(--navy); color: var(--gold);
+    padding: 0.2rem 0.6rem; border-radius: 100px;
+    font-family: 'Outfit', sans-serif;
+  }
+
+  /* ── PUBLICATIONS ── */
+  .pub-year-group { margin-bottom: 3rem; }
+  .pub-year-header {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem; color: var(--navy);
+    border-bottom: 2px solid var(--gold);
+    padding-bottom: 0.5rem; margin-bottom: 1.5rem;
+    display: flex; justify-content: space-between; align-items: baseline;
+  }
+  .pub-year-count { font-family: 'Outfit', sans-serif; font-size: 0.8rem; color: var(--text-muted); }
+  .pub-item {
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--border);
+    display: flex; gap: 1rem; align-items: flex-start;
+  }
+  .pub-item:last-child { border-bottom: none; }
+  .pub-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem; color: var(--text-light);
+    flex-shrink: 0; width: 28px;
+    padding-top: 2px;
+  }
+
+  .pub-title { font-size: 1.05rem; font-weight: 600; color: var(--navy); margin-bottom: 0.35rem; line-height: 1.4; }
+  .pub-authors { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.3rem; }
+  .pub-journal { font-size: 0.82rem; }
+  .pub-journal em { font-style: italic; color: var(--navy); font-weight: 500; }
+  .pub-journal span { color: var(--text-muted); }
+  .pub-badges { display: flex; gap: 0.4rem; margin-top: 0.5rem; flex-wrap: wrap; }
+  .pub-badge {
+    font-size: 0.68rem; font-weight: 600;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+  }
+  .badge-hot { background: #fef3cd; color: #b45309; }
+  .badge-nature { background: #e0f2fe; color: #0369a1; }
+  .badge-acs { background: #f0fdf4; color: #166534; }
+  .badge-cover { background: #fdf4ff; color: #7e22ce; }
+  .pub-doi { font-size: 0.75rem; color: var(--blue); text-decoration: none; }
+  .pub-doi:hover { text-decoration: underline; }
+
+  /* ── ABOUT PAGE ── */
+  .about-hero {
+    background: var(--navy);
+    padding: 5rem 2.5rem;
+    position: relative; overflow: hidden;
+  }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 4rem; align-items: center;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .about-text h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 300;
+    color: white; line-height: 1.2; margin-bottom: 1.5rem;
+  }
+  .about-text h2 em { font-style: italic; color: var(--gold-light); }
+  .about-text p { color: rgba(255,255,255,0.7); font-size: 1rem; line-height: 1.8; margin-bottom: 1rem; }
+  .about-info-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .info-block {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+  }
+  .info-block-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--gold); margin-bottom: 0.4rem; }
+  .info-block-val { font-size: 0.9rem; color: white; line-height: 1.5; }
+  .info-block-val a { color: var(--gold-light); text-decoration: none; }
+
+  /* ── CONTACT ── */
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+  .contact-item { display: flex; gap: 1rem; margin-bottom: 1.75rem; align-items: flex-start; }
+  .contact-icon {
+    width: 40px; height: 40px; border-radius: 8px;
+    background: var(--navy); color: var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; flex-shrink: 0;
+  }
+  .contact-label { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 0.2rem; }
+  .contact-val { font-size: 1.05rem; color: var(--text); }
+  .contact-val a { color: var(--blue); text-decoration: none; }
+  .map-placeholder {
+    background: linear-gradient(135deg, #e8f4f8 0%, #d0e8f2 100%);
+    border-radius: var(--radius);
+    height: 300px;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--border);
+    font-size: 0.9rem; color: var(--text-muted);
+    flex-direction: column; gap: 0.5rem;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--navy);
+    color: rgba(255,255,255,0.6);
+    padding: 3rem 2.5rem 2rem;
+  }
+  .footer-grid {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem; margin-bottom: 2.5rem;
+  }
+
+  .footer-brand h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem; color: white;
+    margin-bottom: 0.75rem;
+  }
+  .footer-brand p { font-size: 0.85rem; line-height: 1.7; max-width: 280px; }
+  footer h4 {
+    font-size: 0.72rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.12em;
+    color: var(--gold); margin-bottom: 1rem;
+  }
+  footer ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+  footer ul li a {
+    color: rgba(255,255,255,0.55); font-size: 0.85rem;
+    text-decoration: none; transition: color 0.2s;
+    cursor: pointer;
+  }
+  footer ul li a:hover { color: white; }
+  .footer-bottom {
+    max-width: 1200px; margin: 0 auto;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.8rem;
+  }
+  .social-links { display: flex; gap: 0.75rem; }
+  .social-link {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    display: flex; align-items: center; justify-content: center;
+    text-decoration: none; color: rgba(255,255,255,0.6);
+    font-size: 0.8rem; transition: all 0.2s;
+  }
+  .social-link:hover { background: var(--gold); color: var(--navy); }
+
+  /* ── MOBILE NAV ── */
+  .mobile-menu {
+    display: none;
+    position: fixed; top: 100px; left: 0; right: 0; z-index: 999;
+    background: var(--navy);
+    padding: 1rem;
+    flex-direction: column;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    padding: 0.85rem 1rem;
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    font-size: 1.05rem;
+    border-radius: 6px;
+    transition: background 0.2s;
+    cursor: pointer;
+    display: block;
+  }
+  .mobile-menu a:hover { background: rgba(255,255,255,0.08); color: white; }
+
+  /* ── ANIMATIONS ── */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.6s ease forwards;
+  }
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .fade-in:nth-child(1) { animation-delay: 0.1s; }
+  .fade-in:nth-child(2) { animation-delay: 0.2s; }
+  .fade-in:nth-child(3) { animation-delay: 0.3s; }
+  .fade-in:nth-child(4) { animation-delay: 0.4s; }
+  .fade-in:nth-child(5) { animation-delay: 0.5s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .stats-bar { grid-template-columns: repeat(2, 1fr); }
+    .stat-item:nth-child(2) { border-right: none; }
+    .news-grid { grid-template-columns: 1fr; }
+    .pi-card { grid-template-columns: 1fr; text-align: center; }
+    .pi-photo { margin: 0 auto; }
+    .pi-metrics { justify-content: center; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .about-grid { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 640px) {
+    nav { padding: 0 1.25rem; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    section { padding: 3.5rem 1.25rem; }
+    .stats-bar { grid-template-columns: repeat(2, 1fr); padding: 1.75rem 1.25rem; }
+    .hero { padding: 3rem 1.25rem; }
+    .research-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+    .members-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+  }
+
+  /* ── UTILS ── */
+  .bg-alt { background: white; }
+  .text-center { text-align: center; }
+  .divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
+  .show-more-btn {
+    display: block; margin: 2.5rem auto 0;
+    padding: 0.85rem 2.5rem;
+    font-size: 0.88rem; font-weight: 500;
+    background: transparent;
+    border: 1.5px solid var(--border);
+    border-radius: 100px;
+    cursor: pointer; color: var(--text-muted);
+    transition: all 0.2s;
+  }
+  .show-more-btn:hover { border-color: var(--navy); color: var(--navy); background: white; }
+  [data-filter] { transition: opacity 0.3s, transform 0.3s; }
+  [data-filter].hidden { display: none; }
+
+  /* ── PUBLICATIONS ── */
+  .pub-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.25s, transform 0.25s;
+  }
+  .pub-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); }
+  .pub-img-wrap {
+    width: 100%; height: 180px; overflow: hidden;
+    background: var(--bg);
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .pub-img-wrap img {
+    width: 100%; height: 100%; object-fit: contain; object-position: center; background: white;
+    transition: transform 0.4s;
+  }
+  .pub-card:hover .pub-img-wrap img { transform: scale(1.04); }
+  .pub-img-placeholder {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem; color: var(--border); font-weight: 700;
+  }
+  .pub-card-body { padding: 1.1rem 1.25rem 1.25rem; flex: 1; display: flex; flex-direction: column; gap: 0.4rem; }
+  .pub-card-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem; color: var(--text-light);
+  }
+  .pub-card-title {
+    font-size: 0.88rem; font-weight: 600; color: var(--navy);
+    line-height: 1.4; flex: 1;
+  }
+  .pub-card-authors { font-size: 0.78rem; color: var(--text-muted); line-height: 1.5; }
+  .pub-card-journal { font-size: 0.78rem; }
+  .pub-card-journal em { font-style: italic; color: var(--navy); font-weight: 500; }
+  .pub-card-journal span { color: var(--text-muted); }
+  .pub-card-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-top: 0.6rem; padding-top: 0.7rem;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap; gap: 0.4rem;
+  }
+  .pub-badges-row { display: flex; gap: 0.3rem; flex-wrap: wrap; }
+  .jbadge {
+    font-size: 0.65rem; font-weight: 700;
+    padding: 0.18rem 0.55rem; border-radius: 3px;
+    text-transform: uppercase; letter-spacing: 0.04em;
+  }
+  .jb-nature  { background:#e0f4f1; color:#00695c; }
+  .jb-acs     { background:#e3f2fd; color:#1565c0; }
+  .jb-wiley   { background:#ede7f6; color:#4527a0; }
+  .jb-rsc     { background:#fce4ec; color:#b71c1c; }
+  .jb-elsevier{ background:#fff3e0; color:#e65100; }
+  .jb-other   { background:#f5f5f5; color:#424242; }
+  .pub-doi-link {
+    font-size: 0.72rem; color: var(--blue);
+    text-decoration: none; font-weight: 500;
+    white-space: nowrap;
+  }
+  .pub-doi-link:hover { text-decoration: underline; }
+  .pub-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+  .year-section { margin-bottom: 3.5rem; }
+  .year-banner {
+    display: flex; align-items: baseline; justify-content: space-between;
+    border-bottom: 2px solid var(--gold);
+    padding-bottom: 0.5rem; margin-bottom: 1.5rem;
+  }
+  .year-banner h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem; color: var(--navy); font-weight: 400;
+  }
+  .year-banner span { font-size: 0.8rem; color: var(--text-muted); }
+  .pub-year-tabs {
+    display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 3rem;
+    position: sticky; top: 100px; background: var(--bg);
+    padding: 0.75rem 0; z-index: 10;
+    border-bottom: 1px solid var(--border);
+  }
+  .ytab {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem; font-weight: 500;
+    padding: 0.45rem 0.9rem;
+    border-radius: 6px;
+    border: 1.5px solid var(--border);
+    background: white; color: var(--text-muted);
+    cursor: pointer; transition: all 0.18s;
+  }
+  .ytab:hover { border-color: var(--navy); color: var(--navy); }
+  .ytab.active { background: var(--navy); border-color: var(--navy); color: white; }
+  .ytab.archive { border-style: dashed; }
+  @media (max-width:640px) {
+    .pub-grid { grid-template-columns: 1fr 1fr; }
+    .pub-img-wrap { height: 130px; }
+  }
+  @media (max-width:400px) {
+    .pub-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav id="mainNav">
+  <a class="nav-logo" href="#" onclick="showPage('home');return false;">
+    <img src="img/nmg_horizontal_dark_cropped.svg" alt="Nazario Martín Group — Organic Molecular Materials" style="height:76px;">
+  </a>
+  <div class="nav-links">
+    <a href="#" onclick="showPage('home');return false;" class="active" id="nav-home">Home</a>
+    <a href="#" onclick="showPage('research');return false;" id="nav-research">Research</a>
+    <a href="#" onclick="showPage('members');return false;" id="nav-members">Members</a>
+    <a href="#" onclick="showPage('publications');return false;" id="nav-publications">Publications</a>
+    <a href="#" onclick="showPage('news');return false;" id="nav-news">News</a>
+    <a href="#" onclick="showPage('about');return false;" id="nav-about">About & Contact</a>
+  </div>
+  <div class="hamburger" onclick="toggleMenu()" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#" onclick="showPage('home');toggleMenu();return false;">Home</a>
+  <a href="#" onclick="showPage('research');toggleMenu();return false;">Research</a>
+  <a href="#" onclick="showPage('members');toggleMenu();return false;">Members</a>
+  <a href="#" onclick="showPage('publications');toggleMenu();return false;">Publications</a>
+  <a href="#" onclick="showPage('news');toggleMenu();return false;">News</a>
+  <a href="#" onclick="showPage('about');toggleMenu();return false;">About & Contact</a>
+</div>
+
+<!-- ═══════════════ HOME PAGE ═══════════════ -->
+<div class="page active" id="page-home">
+
+  <!-- HERO -->
+  <div class="hero">
+    <canvas id="fullerene-canvas"></canvas>
+    <div class="hero-content">
+      <div class="hero-label fade-in">University Complutense of Madrid · IMDEA Nanociencia</div>
+      <h1 class="fade-in">Chemistry at the <em>edge</em><br>of carbon nanoscience</h1>
+      <p class="hero-desc fade-in">
+        We design, synthesize and study functional carbon nanostructures — from fullerenes and nanographenes to carbon dots — for applications in photovoltaics, biomedicine, and molecular electronics.
+      </p>
+      <div class="hero-actions fade-in">
+        <button class="btn btn-primary" onclick="showPage('research')">Explore Our Research</button>
+        <button class="btn btn-outline" onclick="showPage('publications')">View Publications</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stat-item fade-in">
+      <span class="stat-num">650<span>+</span></span>
+      <span class="stat-label">Publications</span>
+    </div>
+    <div class="stat-item fade-in">
+      <span class="stat-num">55</span>
+      <span class="stat-label">Doctoral Theses Supervised</span>
+    </div>
+    <div class="stat-item fade-in">
+      <span class="stat-num">7</span>
+      <span class="stat-label">Active Research Lines</span>
+    </div>
+    <div class="stat-item fade-in">
+      <span class="stat-num">38<span>+</span></span>
+      <span class="stat-label">Years of Excellence</span>
+    </div>
+  </div>
+
+  <!-- RESEARCH OVERVIEW -->
+  <section>
+    <div class="container">
+      <div class="section-header">
+        <div class="section-label">What we do</div>
+        <h2 class="section-title">Research <em>Lines</em></h2>
+        <p class="section-sub">Seven interconnected areas at the forefront of carbon nanoscience and molecular materials.</p>
+      </div>
+      <div class="research-grid">
+        <div class="research-card" onclick="showPage('research')">
+          <div class="research-num">01</div>
+          <h3>Chiral Allotropes of Carbon</h3>
+          <p>Asymmetric synthesis on fullerenes and endofullerenes, and synthesis of chiral carbon nanostructures with precise stereochemical control.</p>
+          <div class="research-tags">
+            <span class="tag">Fullerenes</span><span class="tag">Chirality</span><span class="tag">Asymmetric Catalysis</span>
+          </div>
+        </div>
+        <div class="research-card" onclick="showPage('research')">
+          <div class="research-num">02</div>
+          <h3>Nanographenes</h3>
+          <p>Bottom-up and top-down synthesis of molecular nanographenes and carbon dots (CDs), pulsed laser methods for advanced applications.</p>
+          <div class="research-tags">
+            <span class="tag">Nanographenes</span><span class="tag">Carbon Dots</span><span class="tag">Chirality</span>
+          </div>
+        </div>
+        <div class="research-card" onclick="showPage('research')">
+          <div class="research-num">03</div>
+          <h3>Carbon Nanostructures as Biomolecules</h3>
+          <p>Glycofullerenes for inhibition of viral infections, and carbon nanostructures engineered for targeted biomedical applications.</p>
+          <div class="research-tags">
+            <span class="tag">Glycofullerenes</span><span class="tag">DC-SIGN</span><span class="tag">Antiviral</span>
+          </div>
+        </div>
+        <div class="research-card" onclick="showPage('research')">
+          <div class="research-num">04</div>
+          <h3>Photovoltaics</h3>
+          <p>Design and synthesis of new hole-transporting and electron-accepting materials for highly efficient and stable perovskite solar cells.</p>
+          <div class="research-tags">
+            <span class="tag">Perovskite Solar Cells</span><span class="tag">HTM</span><span class="tag">Organic Electronics</span>
+          </div>
+        </div>
+        <div class="research-card" onclick="showPage('research')">
+          <div class="research-num">05</div>
+          <h3>Organic Materials for Light Emission</h3>
+          <p>Design and synthesis of TADF molecules — both donor–acceptor and multiresonant — for application in next-generation hyperfluorescent OLED devices.</p>
+          <div class="research-tags">
+            <span class="tag">TADF</span><span class="tag">OLEDs</span><span class="tag">MR-TADF</span>
+          </div>
+        </div>
+        <div class="research-card" onclick="showPage('research')">
+          <div class="research-num">06</div>
+          <h3>Photophysics &amp; Photochemistry</h3>
+          <p>Photoinduced energy and electron transfer, singlet oxygen photosensitization, solar reactors and optical sensing of organic molecular materials.</p>
+          <div class="research-tags">
+            <span class="tag">Singlet Oxygen</span><span class="tag">Photocatalysis</span><span class="tag">Optical Sensors</span>
+          </div>
+        </div>
+        <div class="research-card" onclick="showPage('research')">
+          <div class="research-num">07</div>
+          <h3>On-surface Synthesis</h3>
+          <p>Atomically precise fabrication of graphene nanostructures and 2D covalent frameworks on metallic substrates under UHV conditions.</p>
+          <div class="research-tags">
+            <span class="tag">UHV</span><span class="tag">SPM</span><span class="tag">2D COFs</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWS SECTION -->
+  <section class="bg-alt">
+    <div class="container">
+      <div class="news-grid">
+        <div>
+          <div class="section-header">
+            <div class="section-label">Latest from the group</div>
+            <h2 class="section-title">News &amp; <em>Activities</em></h2>
+          </div>
+          <div class="news-list">
+            <div class="news-item">
+              <div class="news-date">
+                <span class="day">11</span>
+                <span class="month">Jun</span>
+                <span class="year">2026</span>
+              </div>
+              <div class="news-content">
+                <div class="news-source">Symposium · UCM &amp; IMDEA Nanociencia</div>
+                <h4>"From Molecular Design to Future Materials" — A Symposium in Honour of Prof. Nazario Martín</h4>
+                <p>On 11–12 June 2026, the Faculties of Chemical and Physical Sciences of the UCM jointly honoured Prof. Nazario Martín on his 70th birthday at the Aula Magna "Blas Cabrera". Co-organised by UCM, IMDEA Nanociencia and the GENAM group of the RSEQ and RSEF, the symposium gathered around thirty distinguished speakers to celebrate his career in functional materials.</p>
+                <div style="margin-top:0.5rem;display:flex;flex-wrap:wrap;gap:0.75rem;"><a href="https://tribuna.ucm.es/news/complutense-homenajea-nazario-martin" target="_blank">Tribuna Complutense →</a><a href="https://www.nanociencia.imdea.org/es/imdea-nanociencia/seminarios/item/simposio-en-honor-a-nazario-martin" target="_blank">IMDEA Nanociencia →</a><a href="https://www.youtube.com/watch?v=QDiuvnNKC8g" target="_blank">Tribute video →</a><a href="https://drive.google.com/drive/folders/1EQs4n_WrXIkHatD7RQjQCZDTxTmhq31T?usp=share_link" target="_blank">Photo gallery →</a></div>
+              </div>
+            </div>
+            <!-- Additional news items follow the same structure -->
+          </div>
+        </div>
+        <div>
+          <div class="sidebar-widget">
+            <div class="widget-title">Affiliations</div>
+            <div class="affiliations">
+              <div class="affil-item">
+                <div class="affil-badge" style="background:#003087;color:white;font-size:0.6rem">UCM</div>
+                <span>Universidad Complutense de Madrid</span>
+              </div>
+              <div class="affil-item">
+                <div class="affil-badge" style="background:#e8291c;color:white;font-size:0.55rem">IMS</div>
+                <span>IMDEA Nanociencia Institute</span>
+              </div>
+              <div class="affil-item">
+                <div class="affil-badge" style="background:#1c3f94;color:white;font-size:0.6rem">ERC</div>
+                <span>European Research Council Advanced Grant</span>
+              </div>
+              <div class="affil-item">
+                <div class="affil-badge" style="background:#005aa7;color:white;font-size:0.55rem">RSC</div>
+                <span>Fellow, Royal Society of Chemistry</span>
+              </div>
+            </div>
+          </div>
+          <div class="sidebar-widget">
+            <div class="widget-title">Open Positions</div>
+            <div style="background:white;border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;">
+              <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:0.75rem;">We actively recruit motivated students and postdocs at all levels.</p>
+              <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="showPage('about')">Enquire →</button>
+            </div>
+          </div>
+          <div class="sidebar-widget">
+            <div class="widget-title">Follow the Group</div>
+            <div style="display:flex;gap:0.75rem;">
+              <a href="https://twitter.com/nazariolab" target="_blank" style="display:flex;align-items:center;gap:0.5rem;font-size:0.85rem;color:var(--text-muted);text-decoration:none;padding:0.6rem 1rem;background:white;border:1px solid var(--border);border-radius:6px;flex:1;justify-content:center;">
+                𝕏 @nazariolab
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════════ RESEARCH PAGE ═══════════════ -->
+<div class="page" id="page-research">
+  <section style="padding-top:5rem;">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-label">Organic Molecular Materials Group</div>
+        <h2 class="section-title">Research <em>Lines</em></h2>
+        <p class="section-sub">Our research is centered on the chemistry and physics of carbon nanostructures, from fundamental synthesis to functional applications across energy, biomedicine, and molecular electronics.</p>
+      </div>
+
+      <!-- Line 1 -->
+      <div style="background:white;border-radius:var(--radius);border:1px solid var(--border);padding:2.5rem;margin-bottom:1.5rem;display:grid;grid-template-columns:80px 1fr;gap:2rem;align-items:start;">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:4rem;font-weight:700;color:var(--border);line-height:1;">01</div>
+        <div>
+          <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--navy);margin-bottom:1rem;">Chiral Allotropes of Carbon</h3>
+          <p style="color:var(--text-muted);line-height:1.8;margin-bottom:1rem;">We develop asymmetric synthetic methodologies applied to fullerenes and endofullerenes, enabling access to enantiomerically enriched carbon nanostructures. This research merges organic synthesis, catalysis and materials science to explore the unexplored stereochemical landscape of carbon allotropes.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;">
+            <div style="background:var(--bg);border-radius:6px;padding:1rem;border-left:3px solid var(--gold);">
+              <div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);margin-bottom:0.3rem;">1.1</div>
+              <div style="font-size:0.9rem;font-weight:500;color:var(--navy);">Asymmetric Catalysis on Fullerenes and Endofullerenes</div>
+            </div>
+            <div style="background:var(--bg);border-radius:6px;padding:1rem;border-left:3px solid var(--gold);">
+              <div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);margin-bottom:0.3rem;">1.2</div>
+              <div style="font-size:0.9rem;font-weight:500;color:var(--navy);">Synthesis of Chiral Carbon Nanostructures</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Line 2 -->
+      <div onclick="openResearchModal('line2')" style="cursor:pointer;background:white;border-radius:var(--radius);border:1px solid var(--border);padding:2.5rem;margin-bottom:1.5rem;display:grid;grid-template-columns:80px 1fr;gap:2rem;align-items:start;">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:4rem;font-weight:700;color:var(--border);line-height:1;">02</div>
+        <div>
+          <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--navy);margin-bottom:1rem;">Nanographenes</h3>
+          <p style="color:var(--text-muted);line-height:1.8;margin-bottom:1rem;">We pursue the bottom-up and top-down synthesis of molecular nanographenes and carbon dots (CDs). Pulsed laser synthesis gives access to doped carbon nanoparticles of tailored composition, and liquid-phase exfoliation provides high-quality nanographene flakes. Carbon dots are synthesized from small organic molecules and functionalized for applications spanning optoelectronics, nanomedicine and antiviral materials.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;">
+            <div style="background:var(--bg);border-radius:6px;padding:1rem;border-left:3px solid var(--gold);"><div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);margin-bottom:0.3rem;">2.1</div><div style="font-size:0.9rem;font-weight:500;color:var(--navy);">Bottom-up Molecular Nanographenes</div></div>
+            <div style="background:var(--bg);border-radius:6px;padding:1rem;border-left:3px solid var(--gold);"><div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);margin-bottom:0.3rem;">2.2</div><div style="font-size:0.9rem;font-weight:500;color:var(--navy);">Heteroatom-Doped Carbon Nanoparticles via Pulsed Laser</div></div>
+            <div style="background:var(--bg);border-radius:6px;padding:1rem;border-left:3px solid var(--gold);"><div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);margin-bottom:0.3rem;">2.3</div><div style="font-size:0.9rem;font-weight:500;color:var(--navy);">Top-down Nanographene Materials</div></div>
+            <div style="background:var(--bg);border-radius:6px;padding:1rem;border-left:3px solid var(--gold);"><div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);margin-bottom:0.3rem;">2.4</div><div style="font-size:0.9rem;font-weight:500;color:var(--navy);">Carbon Dots for Advanced Applications</div></div>
+          </div>
+        
+          <div style="margin-top:1rem;font-size:0.78rem;color:var(--gold);font-weight:600;text-transform:uppercase;letter-spacing:0.1em;">▸ Click to read more</div></div>
+      </div>
+
+      <!-- Line 3 (Carbon Nanostructures as Biomolecules) -->
+      <div style="background:white;border-radius:var(--radius);border:1px solid var(--border);padding:2.5rem;margin-bottom:1.5rem;display:grid;grid-template-columns:80px 1fr;gap:2rem;align-items:start;">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:4rem;font-weight:700;color:var(--border);line-height:1;">03</div>
+        <div>
+          <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--navy);margin-bottom:1rem;">Carbon Nanostructures as Biomolecules</h3>
+          <p style="color:var(--text-muted);line-height:1.8;margin-bottom:1rem;">We engineer multivalent glycofullerenes capable of blocking viral entry mediated by lectin receptors such as DC-SIGN, providing a scaffold-based antiviral strategy. Fluorescent BODIPY-conjugated derivatives enable mechanistic studies via single-particle tracking microscopy.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;">
+            <div style="background:var(--bg);border-radius:6px;padding:1rem;border-left:3px solid var(--gold);"><div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);margin-bottom:0.3rem;">3.1</div><div style="font-size:0.9rem;font-weight:500;color:var(--navy);">Glycofullerenes for Emergent Viruses</div></div>
+            <div style="background:var(--bg);border-radius:6px;padding:1rem;border-left:3px solid var(--gold);"><div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);margin-bottom:0.3rem;">3.2</div><div style="font-size:0.9rem;font-weight:500;color:var(--navy);">Carbon Nanostructures for Bio-medical Applications</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Line 4 (Photovoltaics) -->
+      <div onclick="openResearchModal('photovoltaics')" style="cursor:pointer;background:white;border-radius:var(--radius);border:1px solid var(--border);padding:2.5rem;margin-bottom:1.5rem;display:grid;grid-template-columns:80px 1fr;gap:2rem;align-items:start;">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:4rem;font-weight:700;color:var(--border);line-height:1;">04</div>
+        <div>
+          <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--navy);margin-bottom:1rem;">Photovoltaics</h3>
+          <p style="color:var(--text-muted);line-height:1.8;margin-bottom:1rem;">We develop new organic materials for next-generation solar cells, with a focus on perovskite-based devices. Our group synthesizes and evaluates hole-transporting and electron-accepting materials, studying the relationship between molecular structure and photovoltaic performance to advance the field toward efficient and long-term stable devices.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;">
+            <div style="background:var(--bg);border-radius:6px;padding:1rem;border-left:3px solid var(--gold);"><div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);margin-bottom:0.3rem;">4.1</div><div style="font-size:0.9rem;font-weight:500;color:var(--navy);">Synthesis of Organic Hole-Transporting Materials (HTMs)</div></div>
+            <div style="background:var(--bg);border-radius:6px;padding:1rem;border-left:3px solid var(--gold);"><div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);margin-bottom:0.3rem;">4.2</div><div style="font-size:0.9rem;font-weight:500;color:var(--navy);">Synthesis of Organic Electron-Transporting Materials (ETMs)</div></div>
+          </div>
+          <div style="margin-top:1rem;font-size:0.78rem;color:var(--gold);font-weight:600;text-transform:uppercase;letter-spacing:0.1em;">▸ Click to read more</div>
+        </div>
+      </div>
+
+
+      <!-- Line 5 (Light Emission) -->
+      <div onclick="openResearchModal('line6')" style="cursor:pointer;background:white;border-radius:var(--radius);border:1px solid var(--border);padding:2.5rem;margin-bottom:1.5rem;display:grid;grid-template-columns:80px 1fr;gap:2rem;align-items:start;">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:4rem;font-weight:700;color:var(--border);line-height:1;">05</div>
+        <div>
+          <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--navy);margin-bottom:1rem;">Organic Materials for Light Emission</h3>
+          <p style="color:var(--text-muted);line-height:1.8;margin-bottom:1rem;">We design and synthesize organic molecules capable of efficient electroluminescence for application in OLED devices. Our focus is on Thermally Activated Delayed Fluorescence (TADF), a mechanism that allows triplet excitons — which account for 75% of electrically generated excited states — to be harvested via reverse intersystem crossing. This requires minimizing the singlet–triplet energy gap (ΔE<sub>ST</sub>) through spatial segregation of HOMO and LUMO, achieved by combining electron donor and acceptor fragments.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;">
+            <div style="background:var(--bg);border-radius:6px;padding:1rem;border-left:3px solid var(--gold);"><div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);margin-bottom:0.3rem;">5.1</div><div style="font-size:0.9rem;font-weight:500;color:var(--navy);">Donor–Acceptor TADF Molecules (DA-TADF) for OLEDs</div></div>
+            <div style="background:var(--bg);border-radius:6px;padding:1rem;border-left:3px solid var(--gold);"><div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);margin-bottom:0.3rem;">5.2</div><div style="font-size:0.9rem;font-weight:500;color:var(--navy);">Multiresonant TADF (MR-TADF) via N-Atom Substitution for Hyperfluorescent OLEDs</div></div>
+          </div>
+        
+          <div style="margin-top:1rem;font-size:0.78rem;color:var(--gold);font-weight:600;text-transform:uppercase;letter-spacing:0.1em;">▸ Click to read more</div></div>
+      </div>
+
+      <!-- Line 6 (Photophysics) -->
+      <div onclick="openResearchModal('line7')" style="cursor:pointer;background:white;border-radius:var(--radius);border:1px solid var(--border);padding:2.5rem;margin-bottom:1.5rem;display:grid;grid-template-columns:80px 1fr;gap:2rem;align-items:start;">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:4rem;font-weight:700;color:var(--border);line-height:1;">06</div>
+        <div>
+          <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--navy);margin-bottom:1rem;">Photophysics and Photochemistry of Organic Molecular Materials</h3>
+          <p style="color:var(--text-muted);line-height:1.8;margin-bottom:1rem;">We study the photophysical and photochemical behaviour of excited states in homogeneous and (micro/nano)heterogeneous media. Our research targets photoinduced energy and electron transfer processes underlying photocatalysis, photovoltaics, singlet oxygen photosensitization and photooxidation reactions, with applications spanning environmental remediation, antimicrobial photodynamic therapy and optical sensing.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;">
+            <div style="background:var(--bg);border-radius:6px;padding:1rem;border-left:3px solid var(--gold);"><div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);margin-bottom:0.3rem;">6.1</div><div style="font-size:0.9rem;font-weight:500;color:var(--navy);">Singlet Oxygen Photosensitization &amp; Antimicrobial PDT</div></div>
+            <div style="background:var(--bg);border-radius:6px;padding:1rem;border-left:3px solid var(--gold);"><div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);margin-bottom:0.3rem;">6.2</div><div style="font-size:0.9rem;font-weight:500;color:var(--navy);">Solar Reactors for Water Disinfection &amp; Decontamination</div></div>
+            <div style="background:var(--bg);border-radius:6px;padding:1rem;border-left:3px solid var(--gold);"><div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);margin-bottom:0.3rem;">6.3</div><div style="font-size:0.9rem;font-weight:500;color:var(--navy);">Optical Sensors &amp; Molecular Photoprobes</div></div>
+            <div style="background:var(--bg);border-radius:6px;padding:1rem;border-left:3px solid var(--gold);"><div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);margin-bottom:0.3rem;">6.4</div><div style="font-size:0.9rem;font-weight:500;color:var(--navy);">Photochemistry of Carbon (Nano)materials</div></div>
+          </div>
+          <div style="margin-top:1rem;font-size:0.78rem;color:var(--gold);font-weight:600;text-transform:uppercase;letter-spacing:0.1em;">▸ Click to read more</div>
+        </div>
+      </div>
+
+      <!-- Line 7 (On-surface) -->
+      <div style="background:white;border-radius:var(--radius);border:1px solid var(--border);padding:2.5rem;margin-bottom:1.5rem;display:grid;grid-template-columns:80px 1fr;gap:2rem;align-items:start;">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:4rem;font-weight:700;color:var(--border);line-height:1;">07</div>
+        <div>
+          <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--navy);margin-bottom:1rem;">On-surface Synthesis</h3>
+          <p style="color:var(--text-muted);line-height:1.8;margin-bottom:1rem;">On-surface synthesis under ultra-high vacuum (UHV) conditions allows us to build atomically precise graphene fragments and conjugated polymers directly on metallic substrates. By combining scanning probe microscopy with thermally controlled reactions, we achieve the bottom-up fabrication of covalent nanostructures with tailored electronic and topological properties, bridging molecular chemistry and surface science.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;">
+            <div style="background:var(--bg);border-radius:6px;padding:1rem;border-left:3px solid var(--gold);"><div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);margin-bottom:0.3rem;">7.1</div><div style="font-size:0.9rem;font-weight:500;color:var(--navy);">Atomically Precise Graphene Nanostructures via UHV</div></div>
+            <div style="background:var(--bg);border-radius:6px;padding:1rem;border-left:3px solid var(--gold);"><div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);margin-bottom:0.3rem;">7.2</div><div style="font-size:0.9rem;font-weight:500;color:var(--navy);">2D Covalent Organic Frameworks on Surfaces</div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════════ MEMBERS PAGE ═══════════════ -->
+<div class="page" id="page-members">
+  <section style="padding-top:5rem;">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-label">The Team</div>
+        <h2 class="section-title">Group <em>Members</em></h2>
+        <p class="section-sub">An international team of researchers spanning organic synthesis, nanoscience, spectroscopy, and materials chemistry.</p>
+      </div>
+
+      <!-- Filter -->
+      <div class="members-filter">
+        <button class="filter-btn active" onclick="filterMembers('all', this)">All Members</button>
+        <button class="filter-btn" onclick="filterMembers('professor', this)">Professors</button>
+        <button class="filter-btn" onclick="filterMembers('postdoc', this)">Postdocs</button>
+        <button class="filter-btn" onclick="filterMembers('phd', this)">PhD Students</button>
+        <button class="filter-btn" onclick="filterMembers('former', this)">Former</button>
+      </div>
+
+      <!-- PI Card -->
+      <div class="pi-card" data-filter="professor">
+        <div class="pi-photo">
+          <img src="img/Photo_N_Martin.jpg" alt="Prof. Nazario Martín" onerror="this.parentElement.innerHTML='NM'">
+        </div>
+        <div class="pi-info">
+          <div class="pi-label">Principal Investigator & Group Leader</div>
+          <div class="pi-name">Prof. Nazario Martín León</div>
+          <div class="pi-title">Full Professor of Organic Chemistry · UCM &amp; IMDEA Nanociencia</div>
+          <div class="pi-bio">
+            Full Professor of Organic Chemistry at UCM and Deputy Director of IMDEA Nanociencia. H-index 100 (Google Scholar), 40,000+ citations, 650+ publications, 500+ invited lectures. Fellow of the Royal Society of Chemistry; Member of the Academia Europaea. Recipient of the Alexander von Humboldt Award, Richard E. Smalley Award, Jaime I Award, and Gold Medal of the RSEQ. Former President of the RSEQ (2006–2012) and COSCE (2015–2019). ERC Advanced Grant Holder. Doctor Honoris Causa, Universidad de La Habana and Universidad de Castilla-La Mancha.
+          </div>
+          <div class="pi-metrics">
+            <div class="pi-metric"><strong>650+</strong><span>Publications</span></div>
+            <div class="pi-metric"><strong>55</strong><span>PhD Theses</span></div>
+            <div class="pi-metric"><strong>500+</strong><span>Invited Lectures</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Professors -->
+      <div class="members-category" data-filter="professor">
+        <div class="cat-title">Professors <span class="cat-count">10</span></div>
+        <div class="members-grid">
+          <div class="member-card" data-has-bio onclick="openMemberModal('angel')">
+            <div class="member-photo"><img src="https://www.nazariomartingroup.com/images/Imagenes/miniaturasmgrupo/Angel.png" alt="Ángel Martín" onerror="this.parentElement.innerHTML='<div class=member-initials>AM</div>'"></div>
+            <div class="member-info">
+              <div class="member-role">Associate Professor</div>
+              <div class="member-name">Prof. Ángel Martín Doménech</div>
+              <div class="member-bio">Postdoc at Instituto de Química Médica (CSIC), working on antivirals against HIV. Expert in fullerene reactivity with transition metals and materials science applications.</div>
+            </div>
+          </div>
+          <!-- Additional member cards follow the same structure -->
+        </div>
+      </div>
+
+      <!-- Postdocs -->
+      <div class="members-category" data-filter="postdoc">
+        <div class="cat-title">Postdoctoral Researchers <span class="cat-count">5</span></div>
+        <div class="members-grid">
+          <div class="member-card" data-has-bio onclick="openMemberModal('jesus_f')"><div class="member-photo"><img src="img/Foto_jesus_manuel_fernandez.jpg" onerror="this.parentElement.innerHTML='<div class=member-initials>JF</div>'" alt="Jesús Fernández"></div><div class="member-info"><div class="member-role">Senior Postdoctoral Researcher</div><div class="member-name">Dr. Jesús M. Fernández García</div><div class="member-bio">PhD Univ. Oviedo. Expert in gold-catalyzed cycloisomerization reactions. Currently developing new synthetic methodologies for polycyclic aromatic hydrocarbons.</div></div></div>
+          <!-- Additional member cards follow the same structure -->
+        </div>
+      </div>
+
+      <!-- PhD Students -->
+      <div class="members-category" data-filter="phd">
+        <div class="cat-title">PhD Students <span class="cat-count">19</span></div>
+        <div class="members-grid">
+          <div class="member-card" data-has-bio onclick="openMemberModal('gabriel')"><div class="member-photo"><img src="img/Foto_Gabriel_Alexandru_Hrehoret.jpg" onerror="this.parentElement.innerHTML='<div class=member-initials>GH</div>'" alt="Gabriel A. Hrehoret"></div><div class="member-info"><div class="member-role">PhD Student</div><div class="member-name">Gabriel A. Hrehoret</div><div class="member-bio">BSc and MSc UCM/Interuniversity. PhD co-supervised by Prof. Nazario Martín and Dr. Cristina Flors (IMDEA Nanociencia). Research on fluorescent glycofullerenes for inhibition of DC-SIGN-mediated viral infections.</div></div></div>
+          <!-- Additional member cards follow the same structure -->
+        </div>
+      </div>
+
+      
+
+      <!-- Former Members -->
+      <div class="members-category" data-filter="former">
+        <div class="cat-title">Former Members <span class="cat-count">···</span></div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:2rem 3rem;margin-top:1.25rem;">
+
+          <div>
+            <div style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--gold);margin-bottom:0.6rem;">Former Professors</div>
+            <ul style="list-style:none;padding:0;margin:0;font-size:0.88rem;color:var(--text);line-height:2;">
+              <li>Carmen M. Atienza Castellanos</li>
+              <li>Roberto Martínez Álvarez</li>
+              <!-- Additional names follow the same structure -->
+            </ul>
+          </div>
+
+          <div>
+            <div style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--gold);margin-bottom:0.6rem;">Former Senior Researchers &amp; Postdocs</div>
+            <ul style="list-style:none;padding:0;margin:0;font-size:0.88rem;color:var(--text);line-height:2;">
+              <li>André Alexandre Vieira</li>
+              <li>Braulio Insuasty Obando</li>
+              <!-- Additional names follow the same structure -->
+            </ul>
+          </div>
+
+          <div>
+            <div style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--gold);margin-bottom:0.6rem;">Former Predoctoral Researchers</div>
+            <ul style="list-style:none;padding:0;margin:0;font-size:0.88rem;color:var(--text);line-height:2;">
+              <li>Alberto Insuasty</li>
+              <li>Alejandro Ortíz González</li>
+              <!-- Additional names follow the same structure -->
+            </ul>
+          </div>
+
+          <div>
+            <div style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--gold);margin-bottom:0.6rem;">Former Visiting Scholars</div>
+            <ul style="list-style:none;padding:0;margin:0;font-size:0.88rem;color:var(--text);line-height:2;">
+              <li>Antoine Joanne</li>
+              <li>Ester Cotali</li>
+              <!-- Additional names follow the same structure -->
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════════ PUBLICATIONS PAGE ═══════════════ -->
+<div class="page" id="page-publications">
+
+  <section style="padding-top:5rem;">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-label">Scientific Output</div>
+        <h2 class="section-title">Publications</h2>
+        <p class="section-sub">650+ peer-reviewed articles in leading international journals. Full lists 2017–2026 below; archive 2000–2016 available by year.</p>
+      </div>
+
+      <!-- Year tabs -->
+      <div class="pub-year-tabs" id="yearTabs">
+        <button class="ytab active" onclick="showYear('2026',this)">2026</button>
+        <button class="ytab" onclick="showYear('2025',this)">2025</button>
+        <button class="ytab" onclick="showYear('2024',this)">2024</button>
+        <button class="ytab" onclick="showYear('2023',this)">2023</button>
+        <button class="ytab" onclick="showYear('2022',this)">2022</button>
+        <button class="ytab" onclick="showYear('2021',this)">2021</button>
+        <button class="ytab" onclick="showYear('2020',this)">2020</button>
+        <button class="ytab" onclick="showYear('2019',this)">2019</button>
+        <button class="ytab" onclick="showYear('2018',this)">2018</button>
+        <button class="ytab" onclick="showYear('2017',this)">2017</button>
+        <button class="ytab archive" onclick="showYear('archive',this)">Archive 2000–2016 →</button>
+      </div>
+
+      <!-- ── 2026 ── -->
+      <div class="year-section" id="ys-2026">
+        <div class="year-banner"><h2>2026</h2><span>12 publications</span></div>
+        <div class="pub-grid" id="grid-2026"></div>
+      </div>
+
+      <!-- ── 2025 ── -->
+      <div class="year-section" id="ys-2025" style="display:none;">
+        <div class="year-banner"><h2>2025</h2><span>21 publications</span></div>
+        <div class="pub-grid" id="grid-2025"></div>
+      </div>
+
+      <!-- ── 2024 ── -->
+      <div class="year-section" id="ys-2024" style="display:none;">
+        <div class="year-banner"><h2>2024</h2><span>8 publications</span></div>
+        <div class="pub-grid" id="grid-2024"></div>
+      </div>
+
+      <!-- ── 2023 ── -->
+      <div class="year-section" id="ys-2023" style="display:none;">
+        <div class="year-banner"><h2>2023</h2><span>16 publications</span></div>
+        <div class="pub-grid" id="grid-2023"></div>
+      </div>
+
+      <!-- ── 2022 ── -->
+      <div class="year-section" id="ys-2022" style="display:none;">
+        <div class="year-banner"><h2>2022</h2><span>11 publications</span></div>
+        <div class="pub-grid" id="grid-2022"></div>
+      </div>
+
+      <!-- ── 2021 ── -->
+      <div class="year-section" id="ys-2021" style="display:none;">
+        <div class="year-banner"><h2>2021</h2><span>17 publications</span></div>
+        <div class="pub-grid" id="grid-2021"></div>
+      </div>
+
+      <!-- ── 2020 ── -->
+      <div class="year-section" id="ys-2020" style="display:none;">
+        <div class="year-banner"><h2>2020</h2><span>19 publications</span></div>
+        <div class="pub-grid" id="grid-2020"></div>
+      </div>
+
+      <!-- ── 2019 ── -->
+      <div class="year-section" id="ys-2019" style="display:none;">
+        <div class="year-banner"><h2>2019</h2><span>19 publications</span></div>
+        <div class="pub-grid" id="grid-2019"></div>
+      </div>
+
+      <!-- ── 2018 ── -->
+      <div class="year-section" id="ys-2018" style="display:none;">
+        <div class="year-banner"><h2>2018</h2><span>17 publications</span></div>
+        <div class="pub-grid" id="grid-2018"></div>
+      </div>
+
+      <!-- ── 2017 ── -->
+      <div class="year-section" id="ys-2017" style="display:none;">
+        <div class="year-banner"><h2>2017</h2><span>25 publications</span></div>
+        <div class="pub-grid" id="grid-2017"></div>
+      </div>
+
+      <!-- ── Archive ── -->
+      <div class="year-section" id="ys-archive" style="display:none;">
+        <div class="year-banner"><h2>Archive</h2><span>2000 – 2016</span></div>
+        <div id="archive-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:0.6rem;"></div>
+      </div>
+
+    </div>
+  </section>
+
+
+</div>
+
+<!-- ═══════════════ NEWS PAGE ═══════════════ -->
+<div class="page" id="page-news">
+  <section style="padding-top:5rem;">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-label">Latest Updates</div>
+        <h2 class="section-title">News &amp; <em>Activities</em></h2>
+        <p class="section-sub">Awards, press coverage, and scientific activities from the Organic Molecular Materials Group.</p>
+      </div>
+
+      <!-- Filter tabs -->
+      <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:2.5rem;">
+        <button class="ntab" onclick="filterNews('all',this)" style="padding:0.5rem 1.2rem;border-radius:20px;border:1px solid var(--border);background:var(--navy);color:white;font-size:0.78rem;font-weight:600;letter-spacing:0.05em;cursor:pointer;transition:all 0.2s;">All</button>
+        <button class="ntab" onclick="filterNews('award',this)" style="padding:0.5rem 1.2rem;border-radius:20px;border:1px solid var(--border);background:white;color:var(--navy);font-size:0.78rem;font-weight:600;letter-spacing:0.05em;cursor:pointer;transition:all 0.2s;">Awards &amp; Honours</button>
+        <button class="ntab" onclick="filterNews('press',this)" style="padding:0.5rem 1.2rem;border-radius:20px;border:1px solid var(--border);background:white;color:var(--navy);font-size:0.78rem;font-weight:600;letter-spacing:0.05em;cursor:pointer;transition:all 0.2s;">Press &amp; Media</button>
+        <button class="ntab" onclick="filterNews('event',this)" style="padding:0.5rem 1.2rem;border-radius:20px;border:1px solid var(--border);background:white;color:var(--navy);font-size:0.78rem;font-weight:600;letter-spacing:0.05em;cursor:pointer;transition:all 0.2s;">Events &amp; Activities</button>
+      </div>
+
+      <!-- Timeline -->
+      <div style="position:relative;padding-left:3rem;">
+        <div style="position:absolute;left:1rem;top:0;bottom:0;width:2px;background:var(--border);"></div>
+
+        <div class="nitem event" style="position:relative;margin-bottom:2.5rem;">
+          <div style="position:absolute;left:-2.5rem;top:4px;width:12px;height:12px;border-radius:50%;background:var(--gold);border:2px solid white;box-shadow:0 0 0 3px var(--gold);"></div>
+          <div style="font-size:0.72rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:0.35rem;">June 2026</div>
+          <div style="background:white;border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;">
+            <div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:#2563eb;margin-bottom:0.5rem;">Symposium · UCM &amp; IMDEA Nanociencia</div>
+            <h4 style="font-size:1rem;font-weight:600;color:var(--navy);margin-bottom:0.5rem;">"From Molecular Design to Future Materials" — A Symposium in Honour of Prof. Nazario Martín</h4>
+            <p style="font-size:0.88rem;color:var(--text-muted);line-height:1.7;margin-bottom:0.75rem;">On 11–12 June 2026, the Faculties of Chemical Sciences and Physical Sciences of the Universidad Complutense de Madrid jointly celebrated a symposium honouring Prof. Nazario Martín on the occasion of his 70th birthday, held at the Aula Magna "Blas Cabrera" of the Faculty of Physical Sciences. Co-organised by UCM, IMDEA Nanociencia and the Specialised Group on Nanoscience and Molecular Materials (GENAM) of the RSEQ and RSEF, the event brought together around thirty distinguished speakers — collaborators who have accompanied Prof. Martín throughout his career — to recognise his leadership and vision in the field of functional materials. The organising committee was chaired by Prof. Mª Ángeles Herranz and Dr. Emilio M. Pérez, with Prof. Beatriz M. Illescas, Dr. Salvatore Filippone, Dr. Jesús M. Fernández and Ana Ferruelo.</p>
+            <div style="margin-top:0.75rem;display:flex;flex-wrap:wrap;gap:0.75rem;"><a href="https://tribuna.ucm.es/news/complutense-homenajea-nazario-martin" target="_blank" style="font-size:0.82rem;color:var(--navy);text-decoration:none;font-weight:500;">Tribuna Complutense →</a><a href="https://www.nanociencia.imdea.org/es/imdea-nanociencia/seminarios/item/simposio-en-honor-a-nazario-martin" target="_blank" style="font-size:0.82rem;color:var(--navy);text-decoration:none;font-weight:500;">IMDEA Nanociencia →</a><a href="https://www.youtube.com/watch?v=QDiuvnNKC8g" target="_blank" style="font-size:0.82rem;color:var(--navy);text-decoration:none;font-weight:500;">Tribute video →</a><a href="https://drive.google.com/drive/folders/1EQs4n_WrXIkHatD7RQjQCZDTxTmhq31T?usp=share_link" target="_blank" style="font-size:0.82rem;color:var(--navy);text-decoration:none;font-weight:500;">Photo gallery →</a></div>
+          </div>
+        </div>
+        <div class="nitem award" style="position:relative;margin-bottom:2.5rem;">
+          <div style="position:absolute;left:-2.5rem;top:4px;width:12px;height:12px;border-radius:50%;background:var(--gold);border:2px solid white;box-shadow:0 0 0 3px var(--gold);"></div>
+          <div style="font-size:0.72rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:0.35rem;">June 2026</div>
+          <div style="background:white;border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;">
+            <div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:#b8860b;margin-bottom:0.5rem;">Award · STMad-RSEQ</div>
+            <h4 style="font-size:1rem;font-weight:600;color:var(--navy);margin-bottom:0.5rem;">Dr. Ana Sánchez-Grande Receives the STMad-RSEQ Distinction for Emerging Researchers in Chemistry</h4>
+            <p style="font-size:0.88rem;color:var(--text-muted);line-height:1.7;margin-bottom:0.75rem;">Dr. Ana Sánchez-Grande (Universidad Complutense de Madrid) was awarded one of the second-edition STMad-RSEQ Distinctions for Emerging Researchers in Chemistry of the Community of Madrid, granted by the Madrid Territorial Section of the Real Sociedad Española de Química. The jury, which met on 13 May 2026, reached its decision unanimously, recognising five early-career researchers across the region for the excellence of their scientific work.</p>
+            <div style="margin-top:0.75rem;display:flex;flex-wrap:wrap;gap:0.75rem;"><a href="https://stmad.rseq.org/concesion-investigadores-emergentes-2026/" target="_blank" style="font-size:0.82rem;color:var(--navy);text-decoration:none;font-weight:500;">Read announcement →</a></div>
+          </div>
+        </div>
+        <!-- Additional news items follow the same structure. Categories: event | award | press -->
+      </div><!-- end timeline -->
+    </div>
+  </section>
+</div>
+
+
+
+<!-- ═══════════════ ABOUT PAGE ═══════════════ -->
+<div class="page" id="page-about">
+  <!-- Hero -->
+  <div class="about-hero">
+    <div style="margin-bottom:2rem;border-radius:var(--radius);overflow:hidden;">
+        <img src="img/Foto_grupo.jpg" alt="Nazario Martin Group — Faculty of Chemical Sciences, UCM" style="width:100%;height:auto;display:block;">
+      </div>
+      <div class="about-grid">
+      <div class="about-text">
+        <h2>Organic Molecular Materials<br>at the <em>frontier</em> of nanoscience</h2>
+        <p>The Organic Molecular Materials Group operates at the intersection of organic synthesis, supramolecular chemistry, and nanoscience. We combine precision molecular design with advanced characterization to create carbon-based materials with tailored electronic, optical, and biological properties.</p>
+        <p>Led by Prof. Nazario Martín León, the group has been at the forefront of fullerene and carbon nanomaterial chemistry since the early 1990s, maintaining active collaborations with leading research institutions in Europe, the Americas, and Asia.</p>
+      </div>
+      <div class="about-info-grid">
+        <div class="info-block">
+          <div class="info-block-label">Location</div>
+          <div class="info-block-val">Organic Chemistry Dept.<br>Faculty of Chemistry, 3rd Floor (Building B)<br>Universidad Complutense de Madrid<br>E-28040 Madrid, Spain</div>
+        </div>
+        <div class="info-block">
+          <div class="info-block-label">Also at</div>
+          <div class="info-block-val">IMDEA Nanociencia Institute<br>Faraday 9, Ciudad Universitaria<br>E-28049 Madrid, Spain</div>
+        </div>
+        <div class="info-block">
+          <div class="info-block-label">Contact</div>
+          <div class="info-block-val">Tel: +34 913 944 227<br><a href="/cdn-cgi/l/email-protection#c6a8a7bcaba7b486b7b3afabe8b3a5abe8a3b5"><span class="__cf_email__" data-cfemail="0f616e75626e7d4f7e7a6662217a6c62216a7c">[email&#160;protected]</span></a></div>
+        </div>
+        <div class="info-block">
+          <div class="info-block-label">Affiliations</div>
+          <div class="info-block-val">UCM · IMDEA Nanociencia<br>ERC Advanced Grant · RSEQ<br>Fellow RSC · Academia Europaea</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact -->
+  <section>
+    <div class="container">
+      <div class="contact-grid">
+        <div>
+          <div class="section-header">
+            <div class="section-label">Get in touch</div>
+            <h2 class="section-title">Contact <em>Us</em></h2>
+            <p class="section-sub">For inquiries about research collaborations, open positions, or general information.</p>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">📍</div>
+            <div>
+              <div class="contact-label">Address</div>
+              <div class="contact-val">Dept. Química Orgánica, Fac. Química<br>Universidad Complutense de Madrid<br>E-28040 Madrid, Spain</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">📞</div>
+            <div>
+              <div class="contact-label">Phone</div>
+              <div class="contact-val">+34 913 944 227</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">✉</div>
+            <div>
+              <div class="contact-label">Email</div>
+              <div class="contact-val"><a href="/cdn-cgi/l/email-protection#bed0dfc4d3dfccfecfcbd7d390cbddd390dbcd"><span class="__cf_email__" data-cfemail="e789869d8a8695a796928e8ac992848ac98294">[email&#160;protected]</span></a></div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">🚇</div>
+            <div>
+              <div class="contact-label">Getting Here</div>
+              <div class="contact-val">Metro L6 — Ciudad Universitaria station<br>Bus G, U, F, or 82 → Peñagrande stop<br>Group offices: Building B, 3rd floor</div>
+            </div>
+          </div>
+          <hr class="divider">
+          <div style="background:var(--bg);border-radius:var(--radius);padding:1.5rem;border:1px solid var(--border);">
+            <div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--gold);margin-bottom:0.75rem;">Open Positions</div>
+            <p style="font-size:0.88rem;color:var(--text-muted);line-height:1.7;margin-bottom:1rem;">We regularly welcome motivated PhD candidates, postdoctoral researchers, and visiting scholars. If you are interested in joining the group, please send your CV and a brief statement of research interests to Prof. Martín directly.</p>
+            <a href="/cdn-cgi/l/email-protection#204e415a4d4152605155494d0e55434d0e45531f5355424a4543541d6150504c49434154494f4e0512100565120518100519140512107b794f55520512106e414d457d" class="btn btn-primary" style="font-size:0.85rem;">Send Application →</a>
+          </div>
+        </div>
+        <div>
+          <div class="map-placeholder">
+            <span style="font-size:2rem;">🗺</span>
+            <span>Universidad Complutense de Madrid</span>
+            <span style="font-size:0.8rem;color:var(--text-light);">Ciudad Universitaria, Madrid</span>
+            <a href="https://maps.google.com/?q=Facultad+de+Quimica+UCM+Madrid" target="_blank" style="margin-top:0.75rem;font-size:0.82rem;color:var(--blue);text-decoration:none;">Open in Google Maps →</a>
+          </div>
+          <div style="margin-top:1.5rem;">
+            <div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-muted);margin-bottom:1rem;">Follow the Group</div>
+            <div style="display:flex;gap:0.75rem;">
+              <a href="https://twitter.com/nazariolab" target="_blank" class="btn btn-outline" style="color:var(--text);border-color:var(--border);background:white;font-size:0.85rem;flex:1;justify-content:center;">𝕏 @nazariolab</a>
+              <a href="https://www.facebook.com/pages/Nazario-Martín-Group/449095268441340" target="_blank" class="btn btn-outline" style="color:var(--text);border-color:var(--border);background:white;font-size:0.85rem;flex:1;justify-content:center;">Facebook</a>
+            </div>
+          </div>
+          <div style="margin-top:1.5rem;background:white;border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;">
+            <div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-muted);margin-bottom:0.75rem;">Annual Report</div>
+            <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:0.75rem;">Download the group's annual scientific report summarizing research highlights, publications, and activities.</p>
+            <a href="https://www.nazariomartingroup.com/annual_report.html" target="_blank" style="font-size:0.82rem;color:var(--blue);text-decoration:none;">View Annual Reports →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <img src="img/nmg_horizontal_dark_cropped.svg" alt="Nazario Martín Group" style="height:120px;margin-bottom:0.75rem;opacity:0.85;">
+      <p style="max-width:549px;">Organic Molecular Materials Group. Universidad Complutense de Madrid &amp; IMDEA Nanociencia Institute. Pioneering the chemistry of carbon nanostructures since 1988.</p>
+    </div>
+    <div>
+      <h4>Research</h4>
+      <ul>
+        <li><a onclick="showPage('research')">Chiral Allotropes</a></li>
+        <li><a onclick="showPage('research')">Nanographenes</a></li>
+        <li><a onclick="showPage('research')">Biomedical Applications</a></li>
+        <li><a onclick="showPage('research')">Photovoltaics</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Group</h4>
+      <ul>
+        <li><a onclick="showPage('members')">Members</a></li>
+        <li><a onclick="showPage('publications')">Publications</a></li>
+        <li><a onclick="showPage('news')">News</a></li>
+        <li><a onclick="showPage('about')">About</a></li>
+        <li><a onclick="showPage('about')">Open Positions</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Links</h4>
+      <ul>
+        <li><a href="https://www.ucm.es" target="_blank">UCM</a></li>
+        <li><a href="https://www.imdea.org/nanoscience" target="_blank">IMDEA Nanociencia</a></li>
+        <li><a href="https://erc.europa.eu" target="_blank">European Research Council</a></li>
+        <li><a href="https://www.rseq.org" target="_blank">RSEQ</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Nazario Martín Group · Universidad Complutense de Madrid</span>
+    <div class="social-links">
+      <a class="social-link" href="https://twitter.com/nazariolab" target="_blank">𝕏</a>
+      <a class="social-link" href="https://www.facebook.com/pages/Nazario-Martín-Group/449095268441340" target="_blank">f</a>
+    </div>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// ── Publications data + render ──
+// ── Base image URL helper ──
+const IMG = (year, file) =>
+  `https://www.nazariomartingroup.com/images/imagenes%20articulos/Abstrasct_${year}/${file.replace(/ /g, '%20')}`;
+
+// ── Journal badge helper ──
+function jbadge(journal) {
+  if (/nature|nat\./i.test(journal)) return `<span class="jbadge jb-nature">${journal}</span>`;
+  if (/jacs|j\. am\. chem|acs nano|acs appl/i.test(journal)) return `<span class="jbadge jb-acs">${journal}</span>`;
+  if (/angew|adv\. mater|adv\. funct|adv\. sci|chem\. eur/i.test(journal)) return `<span class="jbadge jb-wiley">${journal}</span>`;
+  if (/chem\. sci|chem\. soc\. rev|j\. mater\. chem|nano lett|rsc/i.test(journal)) return `<span class="jbadge jb-rsc">${journal}</span>`;
+  if (/elsevier|cocis|current opinion/i.test(journal)) return `<span class="jbadge jb-elsevier">${journal}</span>`;
+  return `<span class="jbadge jb-other">${journal}</span>`;
+}
+
+// ── Render a pub card ──
+function pubCard(p, num) {
+  const imgSrc = p.imgLocal ? 'img/' + p.imgLocal : (p.img ? IMG(p.year, p.img) : '');
+  const imgEl = imgSrc
+    ? `<img src="${imgSrc}" alt="${p.title}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=pub-img-placeholder>${p.jshort||'·'}</div>'">`
+    : `<div class="pub-img-placeholder">${p.jshort||'·'}</div>`;
+  const doiEl = p.doi
+    ? `<a class="pub-doi-link" href="${p.doi}" target="_blank">DOI →</a>`
+    : '';
+  return `
+  <div class="pub-card">
+    <div class="pub-img-wrap">${imgEl}</div>
+    <div class="pub-card-body">
+      <div class="pub-card-num">#${num}</div>
+      <div class="pub-card-title">${p.title}</div>
+      <div class="pub-card-authors">${p.authors}</div>
+      <div class="pub-card-journal"><em>${p.journal}</em> <span>· ${p.year}${p.ref ? ', '+p.ref : ''}</span></div>
+      <div class="pub-card-footer">
+        <div class="pub-badges-row">${jbadge(p.jshort||p.journal)}</div>
+        ${doiEl}
+      </div>
+    </div>
+  </div>`;
+}
+
+// ── Publication data 2017–2026 ──
+const PUBS = {
+  2026: [
+    { year:2026, title:"Nanographene-Based van der Waals Organic Framework With Permanent Porosity", authors:"A. Oró, R. Turo-Cortés, J. Perles, J. Sánchez Costa, J. M. Fernández-García, N. Martín", journal:"Angewandte Chemie International Edition", jshort:"Angew. Chem. Int. Ed.", ref:"e4089584", doi:"https://doi.org/10.1002/anie.4089584", imgLocal:"pub2026_sof_nanographene.jpg" },
+    { year:2026, title:"π-Enlargement in Porphyrin Macrocycles at Interfaces", authors:"A. Barragán, E. Pérez-Elvira, A. García-Frutos, D. J. Vicent, P. Mutombo, K. Lauwaet, J. M. Gallego, R. Miranda, J. I. Urgel, A. Gallardo, N. Martín, D. Écija", journal:"Angewandte Chemie International Edition", jshort:"Angew. Chem. Int. Ed.", ref:"e25787", doi:"https://doi.org/10.1002/anie.202525787", imgLocal:"Foto_Angew_2026.png" },
+    // Additional entries follow the same structure...
+  ],
+  2025: [
+    { year:2025, title:"The Role of Fluorine-Functionalized Organic Spacers for Defect Passivation and Low-Dimensional Phase Formation in 3D MAPI Perovskite Solar Cells", authors:"A. Semerci, J. Urieta-Mora, A. Buyruk et al.", journal:"Advanced Functional Materials", jshort:"Adv. Funct. Mater.", ref:"2423109", doi:"https://doi.org/10.1002/adfm.202423109", img:"Adv. Funct..jpg" },
+    { year:2025, title:"Room-Temperature Solid-State Luminescence Switching via CO2 Weak Interaction in a Stable Europium Metal-Organic Framework", authors:"E. Fernandez-Bartolome, J. Sangrador-Perez, J. Urieta-Mora et al.", journal:"Advanced Functional Materials", jshort:"Adv. Funct. Mater.", ref:"e12487", doi:"https://doi.org/10.1002/adfm.202512487", img:"Adv.Mater.2025.png" },
+    // Additional entries follow the same structure...
+  ],
+  2024: [
+    { year:2024, title:"Atomically Precise Control of Topological State Hybridization in Conjugated Polymers", authors:"A. Jimenez-Martin, Z. Sosnova, D. Soler et al.", journal:"ACS Nano", jshort:"ACS Nano", ref:"18, 29902-29912", doi:"https://doi.org/10.1021/acsnano.4c10357", img:"ACS Nano 2024.jpg" },
+    { year:2024, title:"On-Surface Covalent Synthesis of Carbon Nanomaterials by Harnessing Carbon Gem-Polyhalides", authors:"J. I. Urgel, A. Sanchez-Grande, D. J. Vicent et al.", journal:"Advanced Materials", jshort:"Adv. Mater.", ref:"2402467", doi:"https://doi.org/10.1002/adma.202402467", img:"Adv. Mater. 2024 .jpg" },
+    // Additional entries follow the same structure...
+  ],
+  2023: [
+    { year:2023, title:"Survey of Conductive Polymers for the Fabrication of Conformation Switching Nucleic Acid-Based Electrochemical Biosensors", authors:"A. Shaver, K. Mallires, J. Harris et al.", journal:"ACS Applied Polymer Materials", jshort:"ACS Appl. Polym. Mater.", doi:"https://doi.org/10.1021/acsapm.3c02206", img:"ACS Appl. Polym. Mater. 2023.jpg" },
+    { year:2023, title:"Curved Nanographenes: Multiple Emission, Thermally Activated Delayed Fluorescence, and Non-Radiative Decay", authors:"S. Ramirez-Barroso, F. Romeo-Gella, J. M. Fernandez-Garcia et al.", journal:"Advanced Materials", jshort:"Adv. Mater.", ref:"e2212064", doi:"https://doi.org/10.1002/adma.202212064", img:"portada Advanced Materials.jpg" },
+    // Additional entries follow the same structure...
+  ],
+  2022: [
+    { year:2022, title:"Surface-Assisted Synthesis of N-Substituted pi-Conjugated Polymers", authors:"A. Sanchez-Grande, J. I. Urgel, I. Garcia-Benito, J. Santos et al.", journal:"Advanced Science", jshort:"Adv. Sci.", img:"Referencia-Adv.-Sci..jpg" },
+    { year:2022, title:"Initiating Electron Transfer in Doubly-Curved Nanographene Upon Supramolecular Complexation of C60", authors:"S. Zank, J. M. Fernandez-Garcia, A. J. Stasyuk et al.", journal:"Angewandte Chemie International Edition", jshort:"Angew. Chem. Int. Ed.", ref:"61, e202112834", doi:"https://doi.org/10.1002/anie.202112834", img:"Chem.-Int.-Ed.-2021.jpg" },
+    // Additional entries follow the same structure...
+  ],
+  2021: [
+    { year:2021, title:"Hole-Transporting Materials for Perovskite Solar Cells Employing an Anthradithiophene Core", authors:"J. Santos, J. Calbo, R. Sandoval-Torrientes et al.", journal:"ACS Applied Materials & Interfaces", jshort:"ACS Appl. Mater. Interfaces", ref:"13, 28214-28221", doi:"https://doi.org/10.1021/acsami.1c05890", img:"ACS-Appl.-Mater.-Interfaces-2021.jpg" },
+    { year:2021, title:"Enhanced Photodynamic Therapy Effects of Graphene Quantum Dots Conjugated With Aminoporphyrins", authors:"C. I. M. Santos, L. Rodriguez-Perez, G. Goncalves et al.", journal:"ACS Applied Nano Materials", jshort:"ACS Appl. Nano Mater.", ref:"4, 13079-13089", doi:"https://doi.org/10.1021/acsanm.1c02600", img:"ACS-Applied-Nano-Materials-(002).jpg" },
+    { year:2021, title:"Atomic Scale Control and Visualization of Topological Quantum Phase Transition in pi-Conjugated Polymers Driven by Their Length", authors:"H. Gonzalez-Herrero, J. Mendieta-Moreno, Sh. Edalatmanesh et al.", journal:"Advanced Materials", jshort:"Adv. Mater.", ref:"33, 2104495", doi:"https://doi.org/10.1002/adma.202104495", img:"Adv.-Mater..jpg" },
+    // Additional entries follow the same structure...
+  ],
+  2020: [
+    { year:2020, title:"Diradical Organic One-Dimensional Polymers Synthesized on a Metallic Surface", authors:"A. Sanchez-Grande, J. I. Urgel, A. Cahlik et al.", journal:"Angewandte Chemie International Edition", jshort:"Angew. Chem. Int. Ed.", ref:"59, 17594-17599", doi:"https://doi.org/10.1002/anie.202006276", img:"Angew.-Chem.-Int.-Ed.,-2020.jpg" },
+    { year:2020, title:"Ciamician-Gonzalez Lectureship to Prof. Nazario Martin", authors:"N. Martin", journal:"Angewandte Chemie International Edition", jshort:"Angew. Chem. Int. Ed.", ref:"59, 533", img:"nazario.jpg" },
+    // Additional entries follow the same structure...
+  ],
+  2019: [
+    { year:2019, title:"Chiral Molecular Carbon Nanostructures", authors:"J. M. Fernandez-Garcia, P. J. Evans, S. Filippone, M. A. Herranz, N. Martin", journal:"Accounts of Chemical Research", jshort:"Acc. Chem. Res.", ref:"52, 1565-1574", doi:"https://doi.org/10.1021/acs.accounts.9b00144", img:"Acc.-Chem.-Res.jpg" },
+    { year:2019, title:"A Three-Dimensional Dynamic Supramolecular Sticky Fingers Organic Framework", authors:"E. Fernandez-Bartolome, J. Santos, A. Gamonal et al.", journal:"Angewandte Chemie International Edition", jshort:"Angew. Chem. Int. Ed.", ref:"58, 2310-2315", doi:"https://doi.org/10.1002/anie.201812419", img:"unnamed.png" },
+    // Additional entries follow the same structure...
+  ],
+  2018: [
+    { year:2018, title:"Heteroatom Effect on Star-Shaped Hole-Transporting Materials for Perovskite Solar Cells", authors:"I. Garcia-Benito, I. Zimmermann, J. Urieta-Mora et al.", journal:"Advanced Functional Materials", jshort:"Adv. Funct. Mater.", ref:"1801734", img:"Adv. Funct. Mater_2018.JPG" },
+    { year:2018, title:"Exploring Tetrathiafulvalene-Carbon Nanodots Conjugates in Charge Transfer Reactions", authors:"A. Ferrer-Ruiz, T. Scharl, P. Haines et al.", journal:"Angewandte Chemie International Edition", jshort:"Angew. Chem. Int. Ed.", ref:"57, 1001-1005", img:"Captura.JPG1.JPG" },
+    // Additional entries follow the same structure...
+  ],
+  2017: [
+    { year:2017, title:"Heptamethine Cyanine Dyes in the Design of Photoactive Carbon Nanomaterials", authors:"L. Rodriguez-Perez, C. Villegas, M. A. Herranz et al.", journal:"ACS Omega", jshort:"ACS Omega", ref:"2, 9164-9170", doi:"https://doi.org/10.1021/acsomega.7b01499", img:"ACS_2017.PNG" },
+    { year:2017, title:"Carbon Nanoforms for Photovoltaics: Myth or Reality?", authors:"N. Martin", journal:"Advanced Energy Materials", jshort:"Adv. Energy Mater.", ref:"7, 1601102", img:"Articulo-Nazario.jpg" },
+    // Additional entries follow the same structure...
+  ]
+};
+
+// ── Render grids on load ──
+function renderYear(y) {
+  const grid = document.getElementById(`grid-${y}`);
+  if (!grid || grid.innerHTML) return;
+  grid.innerHTML = PUBS[y].map((p,i) => pubCard(p, i+1)).join('');
+}
+
+function showYear(y, btn) {
+  document.querySelectorAll('.year-section').forEach(s => s.style.display = 'none');
+  document.querySelectorAll('.ytab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const sec = document.getElementById(`ys-${y}`);
+  if (sec) { sec.style.display = ''; if (y === 'archive') renderArchive(); else renderYear(y); }
+}
+
+// Render 2026 on init
+document.addEventListener('DOMContentLoaded', () => renderYear(2026));
+
+// ── Render archive year links ──
+function renderArchive() {
+  const grid = document.getElementById('archive-grid');
+  if (!grid || grid.children.length > 0) return;
+  let html = '';
+  for (let y = 2016; y >= 2000; y--) {
+    html += `<a href="https://www.nazariomartingroup.com/Articulos/${y}.html" target="_blank"
+      style="display:block;text-align:center;padding:0.85rem 0.5rem;background:white;border:1px solid var(--border);border-radius:6px;font-family:'JetBrains Mono',monospace;font-size:0.85rem;color:var(--navy);text-decoration:none;font-weight:500;transition:all 0.2s;"
+      onmouseover="this.style.background='var(--navy)';this.style.color='white';"
+      onmouseout="this.style.background='white';this.style.color='var(--navy)';">${y}</a>`;
+  }
+  grid.innerHTML = html;
+}
+
+// ── News filter ──
+function filterNews(cat, btn) {
+  document.querySelectorAll('.ntab').forEach(function(b) {
+    b.style.background = 'white';
+    b.style.color = 'var(--navy)';
+  });
+  btn.style.background = 'var(--navy)';
+  btn.style.color = 'white';
+  document.querySelectorAll('.nitem').forEach(function(el) {
+    if (cat === 'all' || el.classList.contains(cat)) {
+      el.style.display = '';
+    } else {
+      el.style.display = 'none';
+    }
+  });
+}
+
+  // ── Page navigation ──
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    const navEl = document.getElementById('nav-' + id);
+    if (navEl) navEl.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ── Scroll shadow on nav ──
+  window.addEventListener('scroll', () => {
+    document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // ── Mobile menu ──
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+
+  // ── Member filter ──
+
+  // ── MEMBER MODAL ──
+  function openMemberModal(id) {
+    const m = memberData[id]; if (!m) return;
+    const photo = document.getElementById('modalPhoto');
+    if (m.photo) {
+      photo.innerHTML = '<img src="' + m.photo + '" alt="' + m.name + '" onerror="this.parentElement.innerHTML=\'<div class=modal-initials>' + m.initials + '</div>\'">';
+    } else {
+      photo.innerHTML = '<div class="modal-initials">' + m.initials + '</div>';
+    }
+    document.getElementById('modalRole').textContent = m.role;
+    document.getElementById('modalName').textContent = m.name;
+    document.getElementById('modalBio').innerHTML = m.bio;
+    document.getElementById('memberModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMemberModal() {
+    document.getElementById('memberModal').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMemberModal(); });
+
+  const memberData = {
+    'santos': {
+      name: 'Prof. José M. Santos Barahona',
+      role: 'Lecturer · Profesor Contratado Doctor',
+      initials: 'JS',
+      photo: 'img/foto_jose_santos.jpg',
+      bio: `<p><strong>José M. Santos Barahona</strong> graduated in Chemistry in 2005 at Complutense University of Madrid (UCM). His research career has been always focused on exploring the optoelectronic properties of organic materials. His PhD (UCM, 2010) was devoted to research the behavior of <em>fullerenes in molecular wires and in supramolecular associations</em>, during this period he enjoyed an internship at Prof. James R. Durrant group (Imperial College London) familiarizing with transient absorption spectroscopy.</p>
+<p>Between 2011/2014 he was Postdoctoral Research Assistant with Prof. Martin R. Bryce at Durham University (UK), where he introduced himself into the field of light emitting materials, researching in the development of emerging <em>TADF materials for OLEDs</em>. In 2014 he joined Nazario Martín's group at IMDEA-Nanoscience (Madrid) where his research lines stretched from <em>hole transport materials for perovskite solar cells</em> to the synthesis of molecular precursor for <em>on-surface chemistry</em>. In 2021 he started as Lecturer (Profesor Contratado Doctor) at UCM.</p>
+<p>Here, his research is aimed at organic materials for emission: <em>multiresonant and donor/acceptor TADF molecules for hyperfluorescent OLEDs</em>.</p>
+<h4>Research: Organic Materials for Light Emission</h4>
+<p>From lightning to displays, LEDs have become widespread devices. In recent years, OLEDs have started to arise as competing technology to LCD/LED in the display industry. While in LCD/LED screens the LED retroillumination is always on, the coloring and pixel activation depend on transmission through liquid crystal filters, in OLEDs each pixel produces its own light and color. This allows producing cleaner images, with higher contrast and better color gamut.</p>
+<img src="img/santos_research_1.png" alt="OLED vs LCD comparison">
+<p>The foremost issue when trying to produce light from organic molecules is that most of them only efficiently emit from singlet states by fluorescence. From a device perspective this is a critical setback due to the spin statistics of electrically excited molecules, where 75% of the excitons are triplets and just 25% emissive singlets. Nonetheless, a phenomenon discovered in Eosin Y in 1961 called thermally activated delayed fluorescence (TADF) carried the solution to the issue.</p>
+<img src="img/santos_research_2.png" alt="TADF mechanism">
+<p>Molecules presenting TADF are capable of up-converting triplets into singlets by reverse intersystem crossing. For this phenomenon to be possible, the energy gap between singlet and triplet (ΔE<sub>ST</sub>) must be minimal (usually below 0.3 eV). This energy exclusively depends on the exchange energy, which in turn is directly dependent on the HOMO/LUMO overlap. Thus, the strategies to produce molecules with low ΔE<sub>ST</sub> rely on spatially segregating HOMO and LUMO, achieved by merging electron donor (D) and electron acceptor (A) fragments.</p>
+<p>In our group, we design and synthesize TADF molecules by combining different D and A molecules, in an approach called DA-TADF.</p>
+<img src="img/santos_research_3.png" alt="DA-TADF approach">
+<p>In another research line, we develop TADF emitters based on the more novel multiresonant effect, MR-TADF approach, by producing the HOMO/LUMO split through insertion of nitrogen atoms in precise positions.</p>
+<img src="img/santos_research_4.png" alt="MR-TADF approach">`
+    },
+    'ana': {
+      name: 'Dr. Ana Sánchez-Grande',
+      role: 'Talent Attraction Research Associate',
+      initials: 'AS',
+      photo: 'img/foto_ana_sanchez.jpg',
+      bio: `<p><strong>Ana Sánchez-Grande</strong> holds a MSc in chemistry from Universidad Complutense de Madrid (UCM). In 2020, she completed her PhD studies at Imdea Nanoscience, mainly focused on the design and characterization of 1D <em>π</em>-conjugated polymers on surfaces. Then, she joined the Nanosurf lab group led by Pavel Jelínek at the Institute of Physics of the Czech Academy of Sciences (FZU) as postdoctoral researcher, where her main research interest was dedicated to on-surface photochemistry. Currently, she works at the Organic Chemistry Department from the Faculty of Chemical Sciences at UCM as a Talent Attraction Research Associate.</p>`
+    },
+    // Additional member entries follow the same structure...
+    'gabriel': {
+      name: 'Gabriel Alexandru Hrehoret',
+      role: 'PhD Student',
+      initials: 'GH',
+      photo: 'img/Foto_Gabriel_Alexandru_Hrehoret.jpg',
+      bio: `<p><strong>Gabriel Alexandru Hrehoret</strong> obtained his Bachelor's degree in Chemistry from the Universidad Complutense de Madrid, where he carried out his thesis at the UCM Pluridisciplinary Institute on the synthesis of fluorescent Ca(II)-selective probes. He subsequently completed the Interuniversity Master in Organic Chemistry, conducting his thesis at Eli Lilly &amp; Co. on the development of organic reactions in flow microreactors — including ozonolysis using a gas-liquid flow platform — for the synthesis of pharmacologically relevant compounds.</p>
+<p>He is currently pursuing his PhD at IMDEA Nanociencia under the co-supervision of Dr. Cristina Flors (IMDEA Nanociencia) and Prof. Nazario Martín (UCM). His research focuses on the design, synthesis, and advanced characterization of multivalent fluorescent glycofullerenes bearing mannose units, targeting the inhibition of DC-SIGN-mediated viral infections. The development of a BODIPY-labelled derivative enables mechanistic studies at the single-molecule level by Single Particle Tracking microscopy.</p>`
+    }
+  };
+
+
+  // ── RESEARCH LINE MODAL ──
+  const researchData = {
+    'photovoltaics': {
+      title: 'Photovoltaics',
+      num: '04',
+      content: `<p>We develop new organic materials for next-generation solar cells, with a focus on perovskite-based devices. Our group synthesizes and evaluates hole-transporting and electron-accepting materials, studying the relationship between molecular structure and photovoltaic performance to advance the field toward efficient and long-term stable devices.</p>
+<h4 style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--navy);margin:1.5rem 0 0.75rem;">4.1 — Synthesis of Organic HTMs</h4>
+<p>We have been focused on the use of heteroaromatic central π-scaffolds including representative examples such as benzotrithiophene (BTT), anthratetrathiophene (ATT) or triazatruxene (TAT) which are decorated with arylamines. These derivatives display excellent values of power conversion efficiencies (PCEs), some of them superior to the reference material, the well-known spiro-OMeTAD.</p>
+<img src="img/photovoltaic_htms.jpg" alt="Heteroaromatic π-scaffolds for HTMs: BTT, ATT, TAT and related compounds" style="width:100%;border-radius:6px;margin:1rem 0;">
+<p>Furthermore, we have explored the use of new spiro structures with the development of spiro-phenoxazine (spiro-POZ) and spiro-phenothiazine (spiro-PTZ), which have demonstrated to be excellent alternatives for the spiro-OMeTAD. The champion compound reached a maximum PCE of 25.75%, while most of them also showed a notable improvement of the long-term stability of devices.</p>
+<img src="img/photovoltaic_spiro.png" alt="Spiro-PTZ-Fl: PCE 25.75% and long-term ISOS-L3 stability" style="width:75%;border-radius:6px;margin:1rem auto;display:block;">
+<h4 style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--navy);margin:1.5rem 0 0.75rem;">4.2 — Synthesis of Organic ETMs</h4>
+<p>We are engaged in the synthesis of both small-molecule and fullerene-based structures for the preparation of ETMs for incorporation in inverted PSCs. Fullerene-based materials are excellent candidates for the obtention of highly efficient devices, and currently represent one of the most attractive approaches in the field.</p>
+<img src="img/photovoltaic_etms.jpg" alt="Inverted PSC architecture and fullerene-based ETMs (IS-1, IS-2, PI-1, PI-2)" style="width:100%;border-radius:6px;margin:1rem 0;">`
+    },
+    'line2': {
+      title: 'Nanographenes',
+      num: '02',
+      content: `<h4 style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--navy);margin:1.5rem 0 0.75rem;">2.1 — Molecular Nanographenes: Engineering Carbon at the Atomic Scale</h4>
+<p><a href="https://onlinelibrary.wiley.com/doi/book/10.1002/9783527845019" target="_blank" style="color:var(--gold);">Molecular Nanographenes (mNGs)</a> represent the ultimate frontier in carbon-based materials. As monodisperse, nanometer-scale fragments of graphene, these molecules act as precise semiconductors where physics meets chemistry.</p>
+<p>At this scale, the laws of quantum confinement take over. Much like the classic "particle in a box" model, the energy gap of these materials is intrinsically linked to their dimensions: the smaller the box, the larger the band gap. This tunable electronic nature is why mNGs follow the prestigious lineage of the 2010 Nobel Prize in Physics (Graphene) and the 2023 Nobel Prize in Chemistry (Quantum Dots), positioning them as the next generation of semiconductors for high-performance applications.</p>
+<img src="img/research_mng_quantum.png" alt="Quantum confinement in molecular nanographenes — particle in a box model" style="width:100%;border-radius:6px;margin:1rem 0;">
+<h4 style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--navy);margin:1.5rem 0 0.75rem;">Synthesis <em>À La Carte</em>: Precision by Design</h4>
+<p>While traditional top-down nanographene production often lacks uniformity, organic synthesis (bottom-up) allows us to design and construct nanographenes with atomic precision. We take total control over the shape, size, and electronic properties of the final material through a two-step process:</p>
+<p><strong>Building the Architecture (Polyaryl Formation):</strong> We design the backbone of the nanographene by introducing specific "R" groups or structural defects. While our group specializes in [4+2] cycloadditions, we also utilize alkyne cyclotrimerization and Pd-catalyzed cross-coupling to craft the desired molecular scaffold.</p>
+<p><strong>The Graphitization:</strong> The final transformation occurs by fusing the polyaryl precursor into the iconic honeycomb lattice. Using the Scholl reaction (aromatic cyclodehydrogenation), we planarize the structure, unlocking its semiconductor potential.</p>
+<img src="img/research_mng_synthesis.png" alt="Bottom-up synthesis of molecular nanographenes — polyaryl formation and Scholl reaction" style="width:100%;border-radius:6px;margin:1rem 0;">
+<h4 style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--navy);margin:1.5rem 0 0.75rem;">Breaking the Mold: Our Specialized Nanographenes</h4>
+<p>Our research goes beyond standard flat sheets. By strategically inducing defects and specific geometries, we have developed a library of functional nanographenes with unique physical properties: <a href="https://pubs.acs.org/doi/10.1021/jacs.8b09992" target="_blank" style="color:var(--gold);">curved nanographenes</a> exploring 3D carbon surfaces and strain-induced reactivity, <a href="https://pubs.acs.org/doi/10.1021/jacs.3c01088" target="_blank" style="color:var(--gold);">bilayer nanographenes</a> investigating interlayer interactions at the molecular level, <a href="https://www.nature.com/articles/s41557-025-01810-2" target="_blank" style="color:var(--gold);">donor–acceptor nanographenes</a> for advanced optoelectronics, <a href="https://www.nature.com/articles/s44160-024-00484-x" target="_blank" style="color:var(--gold);">chiral nanographenes</a> for CPL and spintronics, and <a href="https://onlinelibrary.wiley.com/doi/10.1002/anie.202312314" target="_blank" style="color:var(--gold);">nanographenes for light emission</a> featuring AIE and TADF properties.</p>
+<video src="img/research_mng_animation.mp4" autoplay loop muted playsinline style="width:100%;border-radius:6px;margin:1rem 0;"></video>
+<h4 style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--navy);margin:1.5rem 0 0.75rem;">2.3 — Top-down Nanographene Materials</h4>
+<p>Chemical approaches toward the preparation of <a href="https://pubs.rsc.org/en/content/articlelanding/2017/cs/c7cs00229g" target="_blank" style="color:var(--gold);">high-quality nanographene</a> flakes by liquid-phase exfoliation of graphite in organic solvents have been implemented. Furthermore, the functionalization of these nanographene materials with redox or optically active molecules has been achieved by means of <a href="https://pubs.acs.org/doi/full/10.1021/acsomega.7b01499" target="_blank" style="color:var(--gold);">covalent</a> or supramolecular methods. We have prepared a series of molecular precursors, containing one or three pyrene anchors covalently linked to <a href="https://pubs.rsc.org/en/content/articlelanding/2017/cc/c7cc07836f" target="_blank" style="color:var(--gold);">[60]fullerene</a>, <a href="https://pubs.acs.org/doi/10.1021/jacs.9b10772" target="_blank" style="color:var(--gold);">porphyrins</a>, or <a href="https://pubs.rsc.org/en/content/articlelanding/2021/tc/d1tc01442k" target="_blank" style="color:var(--gold);">tetrathiafulvalene</a> derivatives, which allowed for the π−π stacking onto nanographene, their individualization, and their characterization. Advanced hybrid systems have been prepared by combining nanographenes with a <a href="https://www.sciencedirect.com/science/article/pii/S2451929417302164" target="_blank" style="color:var(--gold);">NIR absorbing heptamethine cyanine-pyrene dye</a>. A shift of charge density from the anionic heptamethine cyanine to the nanographene material is observed in the electronically dark state, whereas charge transfer takes place upon photoexcitation.</p>
+<img src="img/research_nanographene_topdown_tem.jpeg" alt="Top-down nanographene TEM and molecular structures" style="width:100%;border-radius:6px;margin:1rem 0;">
+<p>Chirality induction and self-organization is an important topic in our studies on nanographenes. The top-down synthesis of <a href="https://pubs.rsc.org/en/content/articlelanding/2016/cc/c5cc08890a" target="_blank" style="color:var(--gold);">chiral nanographenes</a> by covalent functionalization with chiral ligands has been explored. Chirality can actually be transferred to a supramolecular structure built with pyrene molecules, where <a href="https://onlinelibrary.wiley.com/doi/10.1002/anie.202211365" target="_blank" style="color:var(--gold);">chiral-nanographene/pyrene ensembles</a> show a characteristic chiroptical response depending on the configuration of the organic ligands introduced on the nanographene structure. Furthermore, amide hydrogen bonding and π-π stacking interactions could drive the self-aggregation process to construct supramolecular polymers at the nanoscale.</p>
+<img src="img/research_nanographene_chirality_polymer.jpeg" alt="Chiral nanographene supramolecular polymer" style="width:100%;border-radius:6px;margin:1rem 0;">
+<h4 style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--navy);margin:1.5rem 0 0.75rem;">2.4 — Carbon Dots for Advanced Applications</h4>
+<p>Carbon dots (CDs) have emerged as attractive nanomaterials due to their low toxicity, excellent water dispersibility, photostability, and easily tunable surface chemistry. Their properties make them strong candidates for replacing conventional materials in a range of modern applications. In this context, we have explored the synthesis and derivatization of CDs to evaluate their structural versatility and tunability. CDs are obtained from small organic molecules, where thermal or hydrothermal treatments promote crosslinking and graphitization, <a href="https://onlinelibrary.wiley.com/doi/full/10.1002/sstr.202400532" target="_blank" style="color:var(--gold);">modulating solubility and fluorescence quantum yields</a>.</p>
+<img src="img/research_cd_synthesis_xps.jpeg" alt="Carbon dot synthesis and XPS characterization" style="width:100%;border-radius:6px;margin:1rem 0;">
+<p>Special attention was dedicated to customize the optoelectronic properties of CDs, and to investigate the electronic communication in related functional materials. Both, electron-donor and electron-acceptor features of CDs, make their charge-transfer chemistry rather versatile. Charge-separated states are observed in the photoexcitation of CDs previously endowed with electron-donating <a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/anie.201709561" target="_blank" style="color:var(--gold);">extended tetrathiafulvalenes</a> (exTTF) or electron-acceptor 11,11,12,12-tetracyano-9,10-anthra-<em>p</em>-quinodimethane (<a href="https://pubs.acs.org/doi/10.1021/jacs.0c10132" target="_blank" style="color:var(--gold);">TCAQ</a>) or <a href="https://chemistry-europe.onlinelibrary.wiley.com/doi/full/10.1002/chem.202302850" target="_blank" style="color:var(--gold);">C<sub>60</sub></a> units.</p>
+<img src="img/research_cd_exttf_tcaq_c60.jpeg" alt="CD-exTTF, CD-TCAQ and CD-C60 hybrid structures" style="width:100%;border-radius:6px;margin:1rem 0;">
+<p>These advances highlight the group's ability to design hybrid nanostructures with tunable electronic and photophysical properties, reinforcing the potential of CDs in nanomedicine. We have also developed <a href="https://pubs.acs.org/doi/10.1021/acsanm.1c02600" target="_blank" style="color:var(--gold);">CD-porphyrin nanohybrids</a> that show significantly higher uptake in T‑47D breast cancer cells and strong photocytotoxicity under white-light irradiation, confirming that porphyrinic integration boosts both cellular internalization and <a href="https://pubs.acs.org/doi/10.1021/acsanm.5c04990" target="_blank" style="color:var(--gold);">photoresponse</a>. In parallel, we have created <a href="https://pubs.rsc.org/en/content/articlelanding/2026/nr/d5nr05102a" target="_blank" style="color:var(--gold);">glycosylated carbon dots</a> through combined pre- and post-synthetic strategies, establishing a versatile and tunable platform capable of targeting lectin-mediated viral entry and offering promising opportunities for next-generation antiviral materials.</p>
+<img src="img/research_cd_glycosylated_dcsign%202.png" alt="Glycosylated carbon dots targeting DC-SIGN" style="width:70%;border-radius:6px;margin:1rem auto;display:block;">`
+    },
+    'line6': {
+      title: 'Organic Materials for Light Emission',
+      num: '06',
+      content: `<p>From lightning to displays, LEDs have become widespread devices that permeate our everyday activity. In recent years, OLEDs have started to arise as competing technology to LCD/LED in the display industry. While in LCD/LED screens the LED retroillumination is always on, the coloring and pixel activation depend on transmission through liquid crystal filters, in OLEDs each pixel produces its own light and color. This allows producing cleaner images, with higher contrast and better color gamut. From the energy consumption point view, OLED displays pixels only consuming power when illuminating in contrast with LCD/LED.</p>
+<img src="img/santos_research_1.png" alt="OLED vs LCD comparison" style="width:100%;border-radius:6px;margin:1rem 0;">
+<p>The foremost issue when trying to produce light from organic molecules is that most of them only efficiently emit from singlet states by fluorescence. From a device perspective this is a critical setback due to the spin statistics of electrically excited molecules, where 75% of the excitons are triplets and just 25% emissive singlets. Nonetheless, a phenomenon discovered in Eosin Y in 1961 called thermally activated delayed fluorescence (TADF) carried the solution to the issue, despite been overseen over the years. More than 50 years later, in 2012 Adachi and Hatakeyama published the first examples of an efficient TADF based OLED device.</p>
+<img src="img/santos_research_2.png" alt="TADF mechanism" style="width:100%;border-radius:6px;margin:1rem 0;">
+<p>Molecules presenting TADF are capable of up-converting triplets into singlets by reverse intersystem crossing. For this phenomenon to be possible, the energy gap between singlet and triplet (ΔE<sub>ST</sub>) must be minimal (usually below 0.3 eV) in order to be thermally overcome. This energy exclusively depends on the exchange energy (ΔE<sub>ST</sub> = 2J), this in turn is directly dependent on the HOMO/LUMO overlap and the inverse of the distance between them. Thus, the strategies to produce molecules with low ΔE<sub>ST</sub> rely on spatially segregating HOMO and LUMO, which is achieved by merging electron donor (D) and electron acceptor (A) fragments in a molecule.</p>
+<h4 style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--navy);margin:1.5rem 0 0.75rem;">DA-TADF Approach</h4>
+<p>In our group, we design and synthesize TADF molecules by combining different D and A molecules, in an approach called DA-TADF.</p>
+<img src="img/santos_research_3.png" alt="DA-TADF approach" style="width:100%;border-radius:6px;margin:1rem 0;">
+<h4 style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--navy);margin:1.5rem 0 0.75rem;">MR-TADF Approach</h4>
+<p>In another research line, we develop TADF emitters based on the more novel multiresonant effect, MR-TADF approach, by producing the HOMO/LUMO split through insertion of nitrogen atoms in precise positions.</p>
+<img src="img/santos_research_4.png" alt="MR-TADF approach" style="width:100%;border-radius:6px;margin:1rem 0;">`
+    },
+    'line7': {
+      title: 'Photophysics and Photochemistry of Organic Molecular Materials',
+      num: '07',
+      content: `<p>This research line focuses on the photophysical and photochemical characterization of excited states in homogeneous and (micro/nano)heterogeneous media. We study photoinduced energy and electron transfer processes that drive a broad range of light-triggered functions, from photocatalysis and photovoltaics to singlet oxygen photosensitization and photooxidation reactions.</p>
+<h4 style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--navy);margin:1.5rem 0 0.75rem;">Singlet Oxygen Photosensitization and Antimicrobial PDT</h4>
+<p>We design molecular and supported photosensitizers — including Ru(II) polypyridyl complexes and carbon nanostructures — capable of generating singlet oxygen (¹O₂) under visible-light irradiation. These systems are evaluated for the photodynamic inactivation of microorganisms (antimicrobial photodynamic therapy, aPDT) and for the photooxidative degradation of organic contaminants.</p>
+<h4 style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--navy);margin:1.5rem 0 0.75rem;">Solar Reactors for Water Disinfection and Decontamination</h4>
+<p>Building on our photosensitization expertise, we develop solar-driven reactors that exploit ¹O₂ chemistry to disinfect and decontaminate water, contributing to environmental and public-health applications of photochemistry.</p>
+<h4 style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--navy);margin:1.5rem 0 0.75rem;">Optical Sensors and Molecular Photoprobes</h4>
+<p>We engineer luminescent dyes for optical sensing of analytes such as oxygen, surfactants and pesticides, and develop molecular phototools and photoprobes — for instance, DNA oligonucleotides labelled with Ru(II) complexes — for fundamental and biomedical studies.</p>
+<h4 style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--navy);margin:1.5rem 0 0.75rem;">Photochemistry of Carbon (Nano)materials</h4>
+<p>In close connection with the rest of the group, we investigate the photophysics and photochemistry of fullerene derivatives, carbon nanoparticles and molecular nanographenes, exploring their potential in photocatalysis, photovoltaics, photobiology and photomedicine.</p>`
+    }
+  };
+  function openResearchModal(id) {
+    const r = researchData[id]; if (!r) return;
+    document.getElementById('modalPhoto').innerHTML = '<div class="modal-initials" style="font-size:5rem;">' + r.num + '</div>';
+    document.getElementById('modalRole').textContent = 'Research Line';
+    document.getElementById('modalName').textContent = r.title;
+    document.getElementById('modalBio').innerHTML = r.content;
+    document.getElementById('memberModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function filterMembers(type, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const cats = document.querySelectorAll('[data-filter]');
+    cats.forEach(el => {
+      if (type === 'all' || el.dataset.filter === type) {
+        el.style.display = '';
+      } else {
+        el.style.display = 'none';
+      }
+    });
+  }
+
+
+  (function() {
+    const canvas = document.getElementById('fullerene-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const phi = (1 + Math.sqrt(5)) / 2;
+
+    // ── Generate 60 vertices of truncated icosahedron (C60) ──
+    function generateC60Vertices() {
+      const verts = [];
+      // All even (cyclic) permutations of the three coordinate types
+      const addCyclic = (a, b, c) => {
+        verts.push([a, b, c]);
+        verts.push([b, c, a]);
+        verts.push([c, a, b]);
+      };
+      // Type 1: (0, ±1, ±3φ)  → 4 × 3 = 12 vertices
+      for (const s1 of [1,-1]) for (const s2 of [1,-1]) addCyclic(0, s1, s2*3*phi);
+      // Type 2: (±1, ±(2+φ), ±2φ) → 8 × 3 = 24 vertices
+      for (const s1 of [1,-1]) for (const s2 of [1,-1]) for (const s3 of [1,-1])
+        addCyclic(s1, s2*(2+phi), s3*2*phi);
+      // Type 3: (±2, ±(1+2φ), ±φ) → 8 × 3 = 24 vertices
+      for (const s1 of [1,-1]) for (const s2 of [1,-1]) for (const s3 of [1,-1])
+        addCyclic(s1*2, s2*(1+2*phi), s3*phi);
+      return verts; // 60 vertices total ✓
+    }
+
+    // ── Find edges: pairs of vertices at the minimum bond distance ──
+    function findEdges(verts) {
+      const dist2 = (a, b) => (a[0]-b[0])**2 + (a[1]-b[1])**2 + (a[2]-b[2])**2;
+      let min2 = Infinity;
+      for (let i = 0; i < verts.length; i++)
+        for (let j = i+1; j < verts.length; j++) {
+          const d = dist2(verts[i], verts[j]);
+          if (d < min2) min2 = d;
+        }
+      const threshold = min2 * 1.05; // small tolerance
+      const edges = [];
+      for (let i = 0; i < verts.length; i++)
+        for (let j = i+1; j < verts.length; j++)
+          if (dist2(verts[i], verts[j]) <= threshold) edges.push([i, j]);
+      return edges; // 90 edges ✓
+    }
+
+    const rawVerts = generateC60Vertices();
+    const edges   = findEdges(rawVerts);
+
+    // Normalize to unit sphere
+    const maxR = Math.max(...rawVerts.map(v => Math.hypot(...v)));
+    const verts = rawVerts.map(v => v.map(x => x / maxR));
+
+    // ── Resize canvas to fill hero ──
+    function resize() {
+      const hero = canvas.parentElement;
+      canvas.width  = hero.offsetWidth;
+      canvas.height = hero.offsetHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    // ── Rotation helpers ──
+    const rotY = (v, a) => {
+      const c = Math.cos(a), s = Math.sin(a);
+      return [c*v[0]+s*v[2], v[1], -s*v[0]+c*v[2]];
+    };
+    const rotX = (v, a) => {
+      const c = Math.cos(a), s = Math.sin(a);
+      return [v[0], c*v[1]-s*v[2], s*v[1]+c*v[2]];
+    };
+
+    let angleY = 0;
+    const tiltX = 0.35; // fixed slight tilt for nice face visibility
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Centre right-of-centre, vertically centred
+      const cx    = canvas.width  * 0.72;
+      const cy    = canvas.height * 0.50;
+      const scale = Math.min(canvas.width, canvas.height) * 0.36;
+
+      // Transform all vertices
+      const tf = verts.map(v => rotX(rotY(v, angleY), tiltX));
+
+      // ── Draw edges sorted back-to-front (painter's algorithm) ──
+      const sortedEdges = edges.map(([i, j]) => ({
+        i, j, z: (tf[i][2] + tf[j][2]) / 2
+      })).sort((a, b) => a.z - b.z);
+
+      for (const { i, j, z } of sortedEdges) {
+        const depth = (z + 1) / 2; // 0 (back) → 1 (front)
+        const alpha = 0.06 + depth * 0.40;
+        const lw    = 0.7 + depth * 1.6;
+
+        // Blend from white (back) toward gold (front)
+        const r = Math.round(200 * depth + 255 * (1-depth));
+        const g = Math.round(168 * depth + 255 * (1-depth));
+        const b = Math.round( 75 * depth + 255 * (1-depth));
+
+        ctx.beginPath();
+        ctx.moveTo(cx + tf[i][0]*scale, cy - tf[i][1]*scale);
+        ctx.lineTo(cx + tf[j][0]*scale, cy - tf[j][1]*scale);
+        ctx.strokeStyle = `rgba(${r},${g},${b},${alpha})`;
+        ctx.lineWidth = lw;
+        ctx.stroke();
+      }
+
+      // ── Draw vertex dots with golden glow ──
+      const vertsByDepth = tf.map((v, idx) => ({ idx, z: v[2] })).sort((a, b) => a.z - b.z);
+      for (const { idx } of vertsByDepth) {
+        const v = tf[idx];
+        const depth = (v[2] + 1) / 2;
+        const x = cx + v[0] * scale;
+        const y = cy - v[1] * scale;
+        const radius = 1.5 + depth * 2.5;
+        const glowAlpha = 0.1 + depth * 0.6;
+
+        // Outer glow
+        const grd = ctx.createRadialGradient(x, y, 0, x, y, radius * 3);
+        grd.addColorStop(0, `rgba(200,168,75,${glowAlpha * 0.7})`);
+        grd.addColorStop(1, `rgba(200,168,75,0)`);
+        ctx.beginPath();
+        ctx.arc(x, y, radius * 3, 0, Math.PI * 2);
+        ctx.fillStyle = grd;
+        ctx.fill();
+
+        // Core dot
+        ctx.beginPath();
+        ctx.arc(x, y, radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(200,168,75,${glowAlpha})`;
+        ctx.fill();
+      }
+
+      angleY += 0.003;
+      requestAnimationFrame(draw);
+    }
+    draw();
+  })();
+</script>
+
+<!-- ═══════════════ MEMBER MODAL ═══════════════ -->
+<div class="modal-overlay" id="memberModal" onclick="if(event.target===this)closeMemberModal()">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeMemberModal()">✕</button>
+    <div class="modal-photo" id="modalPhoto"></div>
+    <div class="modal-body">
+      <div class="modal-role" id="modalRole"></div>
+      <div class="modal-name" id="modalName"></div>
+      <div class="modal-bio" id="modalBio"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Image Lightbox -->
+<div class="img-lightbox" id="imgLightbox" onclick="closeLightbox()">
+  <button class="lb-close" onclick="closeLightbox()">✕</button>
+  <img id="lbImg" src="" alt="">
+</div>
+<script>
+function openLightbox(src){ document.getElementById('lbImg').src=src; document.getElementById('imgLightbox').classList.add('active'); document.body.style.overflow='hidden'; }
+function closeLightbox(){ document.getElementById('imgLightbox').classList.remove('active'); document.body.style.overflow=''; }
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeLightbox(); });
+</script>
+</body>
+</html>

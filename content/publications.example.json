@@ -1,0 +1,18 @@
+[
+  {
+    "title": "Example Publication Title Goes Here",
+    "authors": "A. Author, B. Author, N. Martín",
+    "journal": "J. Am. Chem. Soc.",
+    "year": 2025,
+    "doi": "10.0000/example",
+    "topic": "fullerenes"
+  },
+  {
+    "title": "Second Example Publication",
+    "authors": "C. Author, N. Martín",
+    "journal": "Angew. Chem. Int. Ed.",
+    "year": 2024,
+    "doi": "10.0000/example2",
+    "topic": "nanographenes"
+  }
+]

@@ -1,0 +1,10 @@
+# Real group content — do not commit until authorized
+content/publications.json
+content/photos/
+
+# OS
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
